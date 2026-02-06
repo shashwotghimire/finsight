@@ -22,3 +22,48 @@ export * from './enums.js';
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Accounts
+ * 
+ */
+export type Accounts = Prisma.AccountsModel
+/**
+ * Model Transactions
+ * 
+ */
+export type Transactions = Prisma.TransactionsModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model SubCategory
+ * 
+ */
+export type SubCategory = Prisma.SubCategoryModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Transfers
+ * 
+ */
+export type Transfers = Prisma.TransfersModel
+/**
+ * Model AnalyticsSnapshots
+ * 
+ */
+export type AnalyticsSnapshots = Prisma.AnalyticsSnapshotsModel
+/**
+ * Model Taxes
+ * 
+ */
+export type Taxes = Prisma.TaxesModel
+/**
+ * Model TransactionTaxes
+ * 
+ */
+export type TransactionTaxes = Prisma.TransactionTaxesModel

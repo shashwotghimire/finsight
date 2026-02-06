@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\nmodel User {\n  id   String @id @default(cuid())\n  name String\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\nenum AccountType {\n  PERSONAL\n  JOINT\n  SAVING\n}\n\nenum TransactionType {\n  INCOME\n  EXPENSE\n}\n\nenum UserType {\n  FREE\n  PAID\n}\n\nenum SubscriptionStatus {\n  ACTIVE\n  EXPIRED\n}\n\nenum TaxType {\n  INCOME\n  VAT\n}\n\nmodel User {\n  id            String   @id @default(cuid())\n  name          String\n  email         String   @unique\n  password      String\n  profilePicUrl String?\n  type          UserType @default(FREE)\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt()\n\n  //oauth\n  googleId           String?   @unique\n  googleAccessToken  String?\n  googleRefreshToken String?\n  googleTokenExpiry  DateTime?\n\n  //relations\n  accounts           Accounts[]\n  categories         Category[]\n  transactions       Transactions[]\n  subscriptions      Subscription[]\n  analyticsSnapshots AnalyticsSnapshots[]\n  taxes              Taxes[]\n}\n\nmodel Accounts {\n  id                String         @id @default(cuid())\n  user              User           @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId            String\n  name              String\n  type              AccountType    @default(PERSONAL)\n  currency          String\n  balance           Decimal\n  createdAt         DateTime       @default(now())\n  updatedAt         DateTime       @updatedAt\n  transactions      Transactions[]\n  outgoingTransfers Transfers[]    @relation(\"FromAccount\")\n  incomingTransfers Transfers[]    @relation(\"ToAccount\")\n}\n\nmodel Transactions {\n  id               String             @id @default(cuid())\n  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId           String\n  account          Accounts           @relation(fields: [accountId], references: [id], onDelete: Cascade)\n  accountId        String\n  type             TransactionType\n  amount           Decimal\n  transactionDate  DateTime\n  category         Category           @relation(fields: [categoryId], references: [id], onDelete: Cascade)\n  categoryId       String\n  note             String?\n  createdAt        DateTime           @default(now())\n  updatedAt        DateTime           @updatedAt()\n  transactionTaxes TransactionTaxes[]\n\n  @@index([id])\n  @@index([userId])\n  @@index([accountId])\n  @@index([transactionDate])\n}\n\nmodel Category {\n  id            String         @id @default(cuid())\n  name          String\n  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId        String\n  transactions  Transactions[]\n  subCategories SubCategory[]\n}\n\nmodel SubCategory {\n  id         String   @id @default(cuid())\n  name       String?\n  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)\n  categoryId String\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n}\n\nmodel Subscription {\n  id        String             @id @default(cuid())\n  user      User               @relation(fields: [userId], references: [id])\n  userId    String\n  price     Decimal\n  startDate DateTime\n  status    SubscriptionStatus @default(EXPIRED)\n  createdAt DateTime           @default(now())\n  updatedAt DateTime           @updatedAt\n}\n\nmodel Transfers {\n  id            String   @id @default(cuid())\n  fromAccount   Accounts @relation(\"FromAccount\", fields: [fromAccountId], references: [id])\n  fromAccountId String\n  toAccount     Accounts @relation(\"ToAccount\", fields: [toAccountId], references: [id])\n  toAccountId   String\n  amount        Decimal\n  transferDate  DateTime\n  note          String?\n}\n\nmodel AnalyticsSnapshots {\n  id                 String   @id @default(cuid())\n  user               User     @relation(fields: [userId], references: [id])\n  userId             String\n  snapshotDate       DateTime\n  totalIncome        Decimal\n  totalExpense       Decimal\n  networth           Decimal\n  categorySummary    Json\n  subCategorySummary Json\n  accountSummary     Json\n}\n\nmodel Taxes {\n  id               String             @id @default(cuid())\n  user             User               @relation(fields: [userId], references: [id])\n  userId           String\n  name             String?\n  rate             Decimal\n  type             TaxType\n  transactionTaxes TransactionTaxes[]\n}\n\nmodel TransactionTaxes {\n  id            String       @id @default(cuid())\n  transaction   Transactions @relation(fields: [transactionId], references: [id])\n  transactionId String\n  tax           Taxes        @relation(fields: [taxId], references: [id])\n  taxId         String\n  amount        Decimal\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profilePicUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"UserType\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"googleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"googleAccessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"googleRefreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"googleTokenExpiry\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Accounts\",\"relationName\":\"AccountsToUser\"},{\"name\":\"categories\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToUser\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transactions\",\"relationName\":\"TransactionsToUser\"},{\"name\":\"subscriptions\",\"kind\":\"object\",\"type\":\"Subscription\",\"relationName\":\"SubscriptionToUser\"},{\"name\":\"analyticsSnapshots\",\"kind\":\"object\",\"type\":\"AnalyticsSnapshots\",\"relationName\":\"AnalyticsSnapshotsToUser\"},{\"name\":\"taxes\",\"kind\":\"object\",\"type\":\"Taxes\",\"relationName\":\"TaxesToUser\"}],\"dbName\":null},\"Accounts\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountsToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"AccountType\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"balance\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transactions\",\"relationName\":\"AccountsToTransactions\"},{\"name\":\"outgoingTransfers\",\"kind\":\"object\",\"type\":\"Transfers\",\"relationName\":\"FromAccount\"},{\"name\":\"incomingTransfers\",\"kind\":\"object\",\"type\":\"Transfers\",\"relationName\":\"ToAccount\"}],\"dbName\":null},\"Transactions\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TransactionsToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"account\",\"kind\":\"object\",\"type\":\"Accounts\",\"relationName\":\"AccountsToTransactions\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"TransactionType\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"transactionDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTransactions\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"note\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"transactionTaxes\",\"kind\":\"object\",\"type\":\"TransactionTaxes\",\"relationName\":\"TransactionTaxesToTransactions\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CategoryToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transactions\",\"relationName\":\"CategoryToTransactions\"},{\"name\":\"subCategories\",\"kind\":\"object\",\"type\":\"SubCategory\",\"relationName\":\"CategoryToSubCategory\"}],\"dbName\":null},\"SubCategory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToSubCategory\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Subscription\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SubscriptionToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"SubscriptionStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Transfers\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fromAccount\",\"kind\":\"object\",\"type\":\"Accounts\",\"relationName\":\"FromAccount\"},{\"name\":\"fromAccountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"toAccount\",\"kind\":\"object\",\"type\":\"Accounts\",\"relationName\":\"ToAccount\"},{\"name\":\"toAccountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"transferDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"note\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"AnalyticsSnapshots\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AnalyticsSnapshotsToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"snapshotDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"totalIncome\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"totalExpense\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"networth\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"categorySummary\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"subCategorySummary\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"accountSummary\",\"kind\":\"scalar\",\"type\":\"Json\"}],\"dbName\":null},\"Taxes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TaxesToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rate\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"TaxType\"},{\"name\":\"transactionTaxes\",\"kind\":\"object\",\"type\":\"TransactionTaxes\",\"relationName\":\"TaxesToTransactionTaxes\"}],\"dbName\":null},\"TransactionTaxes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction\",\"kind\":\"object\",\"type\":\"Transactions\",\"relationName\":\"TransactionTaxesToTransactions\"},{\"name\":\"transactionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tax\",\"kind\":\"object\",\"type\":\"Taxes\",\"relationName\":\"TaxesToTransactionTaxes\"},{\"name\":\"taxId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -185,6 +185,96 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.accounts`: Exposes CRUD operations for the **Accounts** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Accounts
+    * const accounts = await prisma.accounts.findMany()
+    * ```
+    */
+  get accounts(): Prisma.AccountsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.transactions`: Exposes CRUD operations for the **Transactions** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Transactions
+    * const transactions = await prisma.transactions.findMany()
+    * ```
+    */
+  get transactions(): Prisma.TransactionsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.category`: Exposes CRUD operations for the **Category** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Categories
+    * const categories = await prisma.category.findMany()
+    * ```
+    */
+  get category(): Prisma.CategoryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.subCategory`: Exposes CRUD operations for the **SubCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubCategories
+    * const subCategories = await prisma.subCategory.findMany()
+    * ```
+    */
+  get subCategory(): Prisma.SubCategoryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.subscription`: Exposes CRUD operations for the **Subscription** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Subscriptions
+    * const subscriptions = await prisma.subscription.findMany()
+    * ```
+    */
+  get subscription(): Prisma.SubscriptionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.transfers`: Exposes CRUD operations for the **Transfers** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Transfers
+    * const transfers = await prisma.transfers.findMany()
+    * ```
+    */
+  get transfers(): Prisma.TransfersDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.analyticsSnapshots`: Exposes CRUD operations for the **AnalyticsSnapshots** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AnalyticsSnapshots
+    * const analyticsSnapshots = await prisma.analyticsSnapshots.findMany()
+    * ```
+    */
+  get analyticsSnapshots(): Prisma.AnalyticsSnapshotsDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.taxes`: Exposes CRUD operations for the **Taxes** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Taxes
+    * const taxes = await prisma.taxes.findMany()
+    * ```
+    */
+  get taxes(): Prisma.TaxesDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.transactionTaxes`: Exposes CRUD operations for the **TransactionTaxes** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TransactionTaxes
+    * const transactionTaxes = await prisma.transactionTaxes.findMany()
+    * ```
+    */
+  get transactionTaxes(): Prisma.TransactionTaxesDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
