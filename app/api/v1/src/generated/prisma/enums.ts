@@ -48,3 +48,11 @@ export const TaxType = {
 } as const
 
 export type TaxType = (typeof TaxType)[keyof typeof TaxType]
+
+
+export const Currency = {
+  NPR: 'NPR',
+  USD: 'USD'
+} as const
+
+export type Currency = (typeof Currency)[keyof typeof Currency]

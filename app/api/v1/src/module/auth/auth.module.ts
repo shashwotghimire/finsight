@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import dotenv from 'dotenv';
+import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 dotenv.config();
 @Module({
   imports: [
@@ -12,6 +13,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '28d' },
     }),
+    CloudinaryModule,
   ],
   providers: [AuthService, PrismaService],
   controllers: [AuthController],

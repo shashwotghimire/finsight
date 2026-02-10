@@ -39,7 +39,7 @@ export type AccountsMinAggregateOutputType = {
   userId: string | null
   name: string | null
   type: $Enums.AccountType | null
-  currency: string | null
+  currency: $Enums.Currency | null
   balance: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -50,7 +50,7 @@ export type AccountsMaxAggregateOutputType = {
   userId: string | null
   name: string | null
   type: $Enums.AccountType | null
-  currency: string | null
+  currency: $Enums.Currency | null
   balance: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -202,7 +202,7 @@ export type AccountsGroupByOutputType = {
   userId: string
   name: string
   type: $Enums.AccountType
-  currency: string
+  currency: $Enums.Currency
   balance: runtime.Decimal
   createdAt: Date
   updatedAt: Date
@@ -236,7 +236,7 @@ export type AccountsWhereInput = {
   userId?: Prisma.StringFilter<"Accounts"> | string
   name?: Prisma.StringFilter<"Accounts"> | string
   type?: Prisma.EnumAccountTypeFilter<"Accounts"> | $Enums.AccountType
-  currency?: Prisma.StringFilter<"Accounts"> | string
+  currency?: Prisma.EnumCurrencyFilter<"Accounts"> | $Enums.Currency
   balance?: Prisma.DecimalFilter<"Accounts"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Accounts"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Accounts"> | Date | string
@@ -269,7 +269,7 @@ export type AccountsWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Accounts"> | string
   name?: Prisma.StringFilter<"Accounts"> | string
   type?: Prisma.EnumAccountTypeFilter<"Accounts"> | $Enums.AccountType
-  currency?: Prisma.StringFilter<"Accounts"> | string
+  currency?: Prisma.EnumCurrencyFilter<"Accounts"> | $Enums.Currency
   balance?: Prisma.DecimalFilter<"Accounts"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Accounts"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Accounts"> | Date | string
@@ -303,7 +303,7 @@ export type AccountsScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Accounts"> | string
   name?: Prisma.StringWithAggregatesFilter<"Accounts"> | string
   type?: Prisma.EnumAccountTypeWithAggregatesFilter<"Accounts"> | $Enums.AccountType
-  currency?: Prisma.StringWithAggregatesFilter<"Accounts"> | string
+  currency?: Prisma.EnumCurrencyWithAggregatesFilter<"Accounts"> | $Enums.Currency
   balance?: Prisma.DecimalWithAggregatesFilter<"Accounts"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Accounts"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Accounts"> | Date | string
@@ -313,7 +313,7 @@ export type AccountsCreateInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -328,7 +328,7 @@ export type AccountsUncheckedCreateInput = {
   userId: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -341,7 +341,7 @@ export type AccountsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -356,7 +356,7 @@ export type AccountsUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,7 +370,7 @@ export type AccountsCreateManyInput = {
   userId: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -380,7 +380,7 @@ export type AccountsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -391,7 +391,7 @@ export type AccountsUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -499,6 +499,10 @@ export type EnumAccountTypeFieldUpdateOperationsInput = {
   set?: $Enums.AccountType
 }
 
+export type EnumCurrencyFieldUpdateOperationsInput = {
+  set?: $Enums.Currency
+}
+
 export type DecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -553,7 +557,7 @@ export type AccountsCreateWithoutUserInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -566,7 +570,7 @@ export type AccountsUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -609,7 +613,7 @@ export type AccountsScalarWhereInput = {
   userId?: Prisma.StringFilter<"Accounts"> | string
   name?: Prisma.StringFilter<"Accounts"> | string
   type?: Prisma.EnumAccountTypeFilter<"Accounts"> | $Enums.AccountType
-  currency?: Prisma.StringFilter<"Accounts"> | string
+  currency?: Prisma.EnumCurrencyFilter<"Accounts"> | $Enums.Currency
   balance?: Prisma.DecimalFilter<"Accounts"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"Accounts"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Accounts"> | Date | string
@@ -619,7 +623,7 @@ export type AccountsCreateWithoutTransactionsInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -633,7 +637,7 @@ export type AccountsUncheckedCreateWithoutTransactionsInput = {
   userId: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -661,7 +665,7 @@ export type AccountsUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -675,7 +679,7 @@ export type AccountsUncheckedUpdateWithoutTransactionsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,7 +691,7 @@ export type AccountsCreateWithoutOutgoingTransfersInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -701,7 +705,7 @@ export type AccountsUncheckedCreateWithoutOutgoingTransfersInput = {
   userId: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -718,7 +722,7 @@ export type AccountsCreateWithoutIncomingTransfersInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -732,7 +736,7 @@ export type AccountsUncheckedCreateWithoutIncomingTransfersInput = {
   userId: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -760,7 +764,7 @@ export type AccountsUpdateWithoutOutgoingTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -774,7 +778,7 @@ export type AccountsUncheckedUpdateWithoutOutgoingTransfersInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -797,7 +801,7 @@ export type AccountsUpdateWithoutIncomingTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -811,7 +815,7 @@ export type AccountsUncheckedUpdateWithoutIncomingTransfersInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -823,7 +827,7 @@ export type AccountsCreateManyUserInput = {
   id?: string
   name: string
   type?: $Enums.AccountType
-  currency: string
+  currency?: $Enums.Currency
   balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -833,7 +837,7 @@ export type AccountsUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -846,7 +850,7 @@ export type AccountsUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -859,7 +863,7 @@ export type AccountsUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -993,7 +997,7 @@ export type $AccountsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     userId: string
     name: string
     type: $Enums.AccountType
-    currency: string
+    currency: $Enums.Currency
     balance: runtime.Decimal
     createdAt: Date
     updatedAt: Date
@@ -1428,7 +1432,7 @@ export interface AccountsFieldRefs {
   readonly userId: Prisma.FieldRef<"Accounts", 'String'>
   readonly name: Prisma.FieldRef<"Accounts", 'String'>
   readonly type: Prisma.FieldRef<"Accounts", 'AccountType'>
-  readonly currency: Prisma.FieldRef<"Accounts", 'String'>
+  readonly currency: Prisma.FieldRef<"Accounts", 'Currency'>
   readonly balance: Prisma.FieldRef<"Accounts", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"Accounts", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Accounts", 'DateTime'>

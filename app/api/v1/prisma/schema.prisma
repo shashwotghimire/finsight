@@ -40,6 +40,11 @@ enum TaxType {
   VAT
 }
 
+enum Currency {
+  NPR
+  USD
+}
+
 model User {
   id            String   @id @default(cuid())
   name          String
@@ -71,7 +76,7 @@ model Accounts {
   userId            String
   name              String
   type              AccountType    @default(PERSONAL)
-  currency          String
+  currency          Currency       @default(NPR)
   balance           Decimal
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
