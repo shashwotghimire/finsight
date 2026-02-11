@@ -62,6 +62,6 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('me')
   async getMe(@Req() req: AuthenticatedRequest) {
-    return await this.authService.getLoggedInUser('cmlb5h6vy0000qcsls4vrq38j');
+    return await this.authService.getLoggedInUser(req.user.id);
   }
 }
