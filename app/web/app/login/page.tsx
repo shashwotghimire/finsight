@@ -29,6 +29,10 @@ const LoginPage = () => {
       },
     );
   };
+  React.useEffect(() => {
+    console.log("Base URL:", process.env.NEXT_PUBLIC_BASE_URL);
+  }, []);
+
   return (
     <div>
       <form onSubmit={handleLogin}>
