@@ -4,6 +4,7 @@ import { useRegister } from "@/services/api/auth/auth.api";
 import React, { useState } from "react";
 import type { RegisterResponse } from "@/services/api/auth/auth.api";
 import { useRouter } from "next/navigation";
+import { PublicRoute } from "@/components/routes/public-route";
 
 const RegisterPage = () => {
   const [name, setName] = useState<string>("");
@@ -30,30 +31,32 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="First Last"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="user@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Register</button>
-      </form>
-      {data && <p>Registered</p>}
-    </div>
+    <PublicRoute>
+      <div>
+        <form onSubmit={handleRegister}>
+          <input
+            type="text"
+            placeholder="First Last"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="user@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Register</button>
+        </form>
+        {data && <p>Registered</p>}
+      </div>
+    </PublicRoute>
   );
 };
 

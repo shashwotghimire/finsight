@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './module/auth/auth.module';
-import { PrismaModule } from './module/prisma/prisma.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import { CloudinaryModule } from './module/cloudinary/cloudinary.module';
-import { AccountModule } from './module/account/account.module';
+import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
+import { AccountModule } from './modules/account/account.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 @Module({
-  imports: [AuthModule, PrismaModule, ConfigModule.forRoot({ isGlobal: true }), CloudinaryModule, AccountModule],
+  imports: [
+    AuthModule,
+    PrismaModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    CloudinaryModule,
+    AccountModule,
+    DashboardModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
