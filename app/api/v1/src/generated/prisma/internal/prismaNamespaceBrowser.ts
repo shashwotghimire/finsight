@@ -168,7 +168,9 @@ export const TransfersScalarFieldEnum = {
   toAccountId: 'toAccountId',
   amount: 'amount',
   transferDate: 'transferDate',
-  note: 'note'
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type TransfersScalarFieldEnum = (typeof TransfersScalarFieldEnum)[keyof typeof TransfersScalarFieldEnum]
