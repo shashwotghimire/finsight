@@ -1,4 +1,10 @@
-import { IsDateString, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { TransactionType } from 'src/generated/prisma/enums';
 
 export class CreateTransactionDto {
@@ -7,6 +13,10 @@ export class CreateTransactionDto {
 
   @IsString()
   categoryId: string;
+
+  @IsOptional()
+  @IsString()
+  subCategoryId?: string;
 
   @IsEnum(TransactionType)
   type: TransactionType;

@@ -119,6 +119,7 @@ export const TransactionsScalarFieldEnum = {
   amount: 'amount',
   transactionDate: 'transactionDate',
   categoryId: 'categoryId',
+  subCategoryId: 'subCategoryId',
   note: 'note',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -162,6 +163,7 @@ export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[k
 
 export const TransfersScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   fromAccountId: 'fromAccountId',
   toAccountId: 'toAccountId',
   amount: 'amount',

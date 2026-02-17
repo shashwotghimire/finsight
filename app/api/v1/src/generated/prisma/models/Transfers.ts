@@ -36,6 +36,7 @@ export type TransfersSumAggregateOutputType = {
 
 export type TransfersMinAggregateOutputType = {
   id: string | null
+  userId: string | null
   fromAccountId: string | null
   toAccountId: string | null
   amount: runtime.Decimal | null
@@ -45,6 +46,7 @@ export type TransfersMinAggregateOutputType = {
 
 export type TransfersMaxAggregateOutputType = {
   id: string | null
+  userId: string | null
   fromAccountId: string | null
   toAccountId: string | null
   amount: runtime.Decimal | null
@@ -54,6 +56,7 @@ export type TransfersMaxAggregateOutputType = {
 
 export type TransfersCountAggregateOutputType = {
   id: number
+  userId: number
   fromAccountId: number
   toAccountId: number
   amount: number
@@ -73,6 +76,7 @@ export type TransfersSumAggregateInputType = {
 
 export type TransfersMinAggregateInputType = {
   id?: true
+  userId?: true
   fromAccountId?: true
   toAccountId?: true
   amount?: true
@@ -82,6 +86,7 @@ export type TransfersMinAggregateInputType = {
 
 export type TransfersMaxAggregateInputType = {
   id?: true
+  userId?: true
   fromAccountId?: true
   toAccountId?: true
   amount?: true
@@ -91,6 +96,7 @@ export type TransfersMaxAggregateInputType = {
 
 export type TransfersCountAggregateInputType = {
   id?: true
+  userId?: true
   fromAccountId?: true
   toAccountId?: true
   amount?: true
@@ -187,6 +193,7 @@ export type TransfersGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type TransfersGroupByOutputType = {
   id: string
+  userId: string
   fromAccountId: string
   toAccountId: string
   amount: runtime.Decimal
@@ -219,22 +226,26 @@ export type TransfersWhereInput = {
   OR?: Prisma.TransfersWhereInput[]
   NOT?: Prisma.TransfersWhereInput | Prisma.TransfersWhereInput[]
   id?: Prisma.StringFilter<"Transfers"> | string
+  userId?: Prisma.StringFilter<"Transfers"> | string
   fromAccountId?: Prisma.StringFilter<"Transfers"> | string
   toAccountId?: Prisma.StringFilter<"Transfers"> | string
   amount?: Prisma.DecimalFilter<"Transfers"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFilter<"Transfers"> | Date | string
   note?: Prisma.StringNullableFilter<"Transfers"> | string | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   fromAccount?: Prisma.XOR<Prisma.AccountsScalarRelationFilter, Prisma.AccountsWhereInput>
   toAccount?: Prisma.XOR<Prisma.AccountsScalarRelationFilter, Prisma.AccountsWhereInput>
 }
 
 export type TransfersOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   fromAccountId?: Prisma.SortOrder
   toAccountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   transferDate?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
   fromAccount?: Prisma.AccountsOrderByWithRelationInput
   toAccount?: Prisma.AccountsOrderByWithRelationInput
 }
@@ -244,17 +255,20 @@ export type TransfersWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TransfersWhereInput | Prisma.TransfersWhereInput[]
   OR?: Prisma.TransfersWhereInput[]
   NOT?: Prisma.TransfersWhereInput | Prisma.TransfersWhereInput[]
+  userId?: Prisma.StringFilter<"Transfers"> | string
   fromAccountId?: Prisma.StringFilter<"Transfers"> | string
   toAccountId?: Prisma.StringFilter<"Transfers"> | string
   amount?: Prisma.DecimalFilter<"Transfers"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFilter<"Transfers"> | Date | string
   note?: Prisma.StringNullableFilter<"Transfers"> | string | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   fromAccount?: Prisma.XOR<Prisma.AccountsScalarRelationFilter, Prisma.AccountsWhereInput>
   toAccount?: Prisma.XOR<Prisma.AccountsScalarRelationFilter, Prisma.AccountsWhereInput>
 }, "id">
 
 export type TransfersOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   fromAccountId?: Prisma.SortOrder
   toAccountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -272,6 +286,7 @@ export type TransfersScalarWhereWithAggregatesInput = {
   OR?: Prisma.TransfersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TransfersScalarWhereWithAggregatesInput | Prisma.TransfersScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Transfers"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"Transfers"> | string
   fromAccountId?: Prisma.StringWithAggregatesFilter<"Transfers"> | string
   toAccountId?: Prisma.StringWithAggregatesFilter<"Transfers"> | string
   amount?: Prisma.DecimalWithAggregatesFilter<"Transfers"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -284,12 +299,14 @@ export type TransfersCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
   note?: string | null
+  user: Prisma.UserCreateNestedOneWithoutTransfersInput
   fromAccount: Prisma.AccountsCreateNestedOneWithoutOutgoingTransfersInput
   toAccount: Prisma.AccountsCreateNestedOneWithoutIncomingTransfersInput
 }
 
 export type TransfersUncheckedCreateInput = {
   id?: string
+  userId: string
   fromAccountId: string
   toAccountId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -302,12 +319,14 @@ export type TransfersUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutTransfersNestedInput
   fromAccount?: Prisma.AccountsUpdateOneRequiredWithoutOutgoingTransfersNestedInput
   toAccount?: Prisma.AccountsUpdateOneRequiredWithoutIncomingTransfersNestedInput
 }
 
 export type TransfersUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   fromAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   toAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -317,6 +336,7 @@ export type TransfersUncheckedUpdateInput = {
 
 export type TransfersCreateManyInput = {
   id?: string
+  userId: string
   fromAccountId: string
   toAccountId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -333,6 +353,7 @@ export type TransfersUpdateManyMutationInput = {
 
 export type TransfersUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   fromAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   toAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -352,6 +373,7 @@ export type TransfersOrderByRelationAggregateInput = {
 
 export type TransfersCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   fromAccountId?: Prisma.SortOrder
   toAccountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -365,6 +387,7 @@ export type TransfersAvgOrderByAggregateInput = {
 
 export type TransfersMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   fromAccountId?: Prisma.SortOrder
   toAccountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -374,6 +397,7 @@ export type TransfersMaxOrderByAggregateInput = {
 
 export type TransfersMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   fromAccountId?: Prisma.SortOrder
   toAccountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -383,6 +407,48 @@ export type TransfersMinOrderByAggregateInput = {
 
 export type TransfersSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+}
+
+export type TransfersCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.TransfersCreateWithoutUserInput, Prisma.TransfersUncheckedCreateWithoutUserInput> | Prisma.TransfersCreateWithoutUserInput[] | Prisma.TransfersUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.TransfersCreateOrConnectWithoutUserInput | Prisma.TransfersCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.TransfersCreateManyUserInputEnvelope
+  connect?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+}
+
+export type TransfersUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.TransfersCreateWithoutUserInput, Prisma.TransfersUncheckedCreateWithoutUserInput> | Prisma.TransfersCreateWithoutUserInput[] | Prisma.TransfersUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.TransfersCreateOrConnectWithoutUserInput | Prisma.TransfersCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.TransfersCreateManyUserInputEnvelope
+  connect?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+}
+
+export type TransfersUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.TransfersCreateWithoutUserInput, Prisma.TransfersUncheckedCreateWithoutUserInput> | Prisma.TransfersCreateWithoutUserInput[] | Prisma.TransfersUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.TransfersCreateOrConnectWithoutUserInput | Prisma.TransfersCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.TransfersUpsertWithWhereUniqueWithoutUserInput | Prisma.TransfersUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.TransfersCreateManyUserInputEnvelope
+  set?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  disconnect?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  delete?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  connect?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  update?: Prisma.TransfersUpdateWithWhereUniqueWithoutUserInput | Prisma.TransfersUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.TransfersUpdateManyWithWhereWithoutUserInput | Prisma.TransfersUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
+}
+
+export type TransfersUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.TransfersCreateWithoutUserInput, Prisma.TransfersUncheckedCreateWithoutUserInput> | Prisma.TransfersCreateWithoutUserInput[] | Prisma.TransfersUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.TransfersCreateOrConnectWithoutUserInput | Prisma.TransfersCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.TransfersUpsertWithWhereUniqueWithoutUserInput | Prisma.TransfersUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.TransfersCreateManyUserInputEnvelope
+  set?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  disconnect?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  delete?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  connect?: Prisma.TransfersWhereUniqueInput | Prisma.TransfersWhereUniqueInput[]
+  update?: Prisma.TransfersUpdateWithWhereUniqueWithoutUserInput | Prisma.TransfersUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.TransfersUpdateManyWithWhereWithoutUserInput | Prisma.TransfersUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
 }
 
 export type TransfersCreateNestedManyWithoutFromAccountInput = {
@@ -469,16 +535,75 @@ export type TransfersUncheckedUpdateManyWithoutToAccountNestedInput = {
   deleteMany?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
 }
 
+export type TransfersCreateWithoutUserInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate: Date | string
+  note?: string | null
+  fromAccount: Prisma.AccountsCreateNestedOneWithoutOutgoingTransfersInput
+  toAccount: Prisma.AccountsCreateNestedOneWithoutIncomingTransfersInput
+}
+
+export type TransfersUncheckedCreateWithoutUserInput = {
+  id?: string
+  fromAccountId: string
+  toAccountId: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate: Date | string
+  note?: string | null
+}
+
+export type TransfersCreateOrConnectWithoutUserInput = {
+  where: Prisma.TransfersWhereUniqueInput
+  create: Prisma.XOR<Prisma.TransfersCreateWithoutUserInput, Prisma.TransfersUncheckedCreateWithoutUserInput>
+}
+
+export type TransfersCreateManyUserInputEnvelope = {
+  data: Prisma.TransfersCreateManyUserInput | Prisma.TransfersCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type TransfersUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.TransfersWhereUniqueInput
+  update: Prisma.XOR<Prisma.TransfersUpdateWithoutUserInput, Prisma.TransfersUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.TransfersCreateWithoutUserInput, Prisma.TransfersUncheckedCreateWithoutUserInput>
+}
+
+export type TransfersUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.TransfersWhereUniqueInput
+  data: Prisma.XOR<Prisma.TransfersUpdateWithoutUserInput, Prisma.TransfersUncheckedUpdateWithoutUserInput>
+}
+
+export type TransfersUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.TransfersScalarWhereInput
+  data: Prisma.XOR<Prisma.TransfersUpdateManyMutationInput, Prisma.TransfersUncheckedUpdateManyWithoutUserInput>
+}
+
+export type TransfersScalarWhereInput = {
+  AND?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
+  OR?: Prisma.TransfersScalarWhereInput[]
+  NOT?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
+  id?: Prisma.StringFilter<"Transfers"> | string
+  userId?: Prisma.StringFilter<"Transfers"> | string
+  fromAccountId?: Prisma.StringFilter<"Transfers"> | string
+  toAccountId?: Prisma.StringFilter<"Transfers"> | string
+  amount?: Prisma.DecimalFilter<"Transfers"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate?: Prisma.DateTimeFilter<"Transfers"> | Date | string
+  note?: Prisma.StringNullableFilter<"Transfers"> | string | null
+}
+
 export type TransfersCreateWithoutFromAccountInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
   note?: string | null
+  user: Prisma.UserCreateNestedOneWithoutTransfersInput
   toAccount: Prisma.AccountsCreateNestedOneWithoutIncomingTransfersInput
 }
 
 export type TransfersUncheckedCreateWithoutFromAccountInput = {
   id?: string
+  userId: string
   toAccountId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
@@ -500,11 +625,13 @@ export type TransfersCreateWithoutToAccountInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
   note?: string | null
+  user: Prisma.UserCreateNestedOneWithoutTransfersInput
   fromAccount: Prisma.AccountsCreateNestedOneWithoutOutgoingTransfersInput
 }
 
 export type TransfersUncheckedCreateWithoutToAccountInput = {
   id?: string
+  userId: string
   fromAccountId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
@@ -537,18 +664,6 @@ export type TransfersUpdateManyWithWhereWithoutFromAccountInput = {
   data: Prisma.XOR<Prisma.TransfersUpdateManyMutationInput, Prisma.TransfersUncheckedUpdateManyWithoutFromAccountInput>
 }
 
-export type TransfersScalarWhereInput = {
-  AND?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
-  OR?: Prisma.TransfersScalarWhereInput[]
-  NOT?: Prisma.TransfersScalarWhereInput | Prisma.TransfersScalarWhereInput[]
-  id?: Prisma.StringFilter<"Transfers"> | string
-  fromAccountId?: Prisma.StringFilter<"Transfers"> | string
-  toAccountId?: Prisma.StringFilter<"Transfers"> | string
-  amount?: Prisma.DecimalFilter<"Transfers"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  transferDate?: Prisma.DateTimeFilter<"Transfers"> | Date | string
-  note?: Prisma.StringNullableFilter<"Transfers"> | string | null
-}
-
 export type TransfersUpsertWithWhereUniqueWithoutToAccountInput = {
   where: Prisma.TransfersWhereUniqueInput
   update: Prisma.XOR<Prisma.TransfersUpdateWithoutToAccountInput, Prisma.TransfersUncheckedUpdateWithoutToAccountInput>
@@ -565,8 +680,45 @@ export type TransfersUpdateManyWithWhereWithoutToAccountInput = {
   data: Prisma.XOR<Prisma.TransfersUpdateManyMutationInput, Prisma.TransfersUncheckedUpdateManyWithoutToAccountInput>
 }
 
+export type TransfersCreateManyUserInput = {
+  id?: string
+  fromAccountId: string
+  toAccountId: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate: Date | string
+  note?: string | null
+}
+
+export type TransfersUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromAccount?: Prisma.AccountsUpdateOneRequiredWithoutOutgoingTransfersNestedInput
+  toAccount?: Prisma.AccountsUpdateOneRequiredWithoutIncomingTransfersNestedInput
+}
+
+export type TransfersUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fromAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  toAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TransfersUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fromAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  toAccountId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 export type TransfersCreateManyFromAccountInput = {
   id?: string
+  userId: string
   toAccountId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
@@ -575,6 +727,7 @@ export type TransfersCreateManyFromAccountInput = {
 
 export type TransfersCreateManyToAccountInput = {
   id?: string
+  userId: string
   fromAccountId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate: Date | string
@@ -586,11 +739,13 @@ export type TransfersUpdateWithoutFromAccountInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutTransfersNestedInput
   toAccount?: Prisma.AccountsUpdateOneRequiredWithoutIncomingTransfersNestedInput
 }
 
 export type TransfersUncheckedUpdateWithoutFromAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   toAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -599,6 +754,7 @@ export type TransfersUncheckedUpdateWithoutFromAccountInput = {
 
 export type TransfersUncheckedUpdateManyWithoutFromAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   toAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -610,11 +766,13 @@ export type TransfersUpdateWithoutToAccountInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutTransfersNestedInput
   fromAccount?: Prisma.AccountsUpdateOneRequiredWithoutOutgoingTransfersNestedInput
 }
 
 export type TransfersUncheckedUpdateWithoutToAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   fromAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -623,6 +781,7 @@ export type TransfersUncheckedUpdateWithoutToAccountInput = {
 
 export type TransfersUncheckedUpdateManyWithoutToAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   fromAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transferDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -633,39 +792,46 @@ export type TransfersUncheckedUpdateManyWithoutToAccountInput = {
 
 export type TransfersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   fromAccountId?: boolean
   toAccountId?: boolean
   amount?: boolean
   transferDate?: boolean
   note?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   fromAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
   toAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transfers"]>
 
 export type TransfersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   fromAccountId?: boolean
   toAccountId?: boolean
   amount?: boolean
   transferDate?: boolean
   note?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   fromAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
   toAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transfers"]>
 
 export type TransfersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   fromAccountId?: boolean
   toAccountId?: boolean
   amount?: boolean
   transferDate?: boolean
   note?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   fromAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
   toAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transfers"]>
 
 export type TransfersSelectScalar = {
   id?: boolean
+  userId?: boolean
   fromAccountId?: boolean
   toAccountId?: boolean
   amount?: boolean
@@ -673,16 +839,19 @@ export type TransfersSelectScalar = {
   note?: boolean
 }
 
-export type TransfersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fromAccountId" | "toAccountId" | "amount" | "transferDate" | "note", ExtArgs["result"]["transfers"]>
+export type TransfersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "fromAccountId" | "toAccountId" | "amount" | "transferDate" | "note", ExtArgs["result"]["transfers"]>
 export type TransfersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   fromAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
   toAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
 }
 export type TransfersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   fromAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
   toAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
 }
 export type TransfersIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   fromAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
   toAccount?: boolean | Prisma.AccountsDefaultArgs<ExtArgs>
 }
@@ -690,11 +859,13 @@ export type TransfersIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type $TransfersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Transfers"
   objects: {
+    user: Prisma.$UserPayload<ExtArgs>
     fromAccount: Prisma.$AccountsPayload<ExtArgs>
     toAccount: Prisma.$AccountsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    userId: string
     fromAccountId: string
     toAccountId: string
     amount: runtime.Decimal
@@ -1094,6 +1265,7 @@ readonly fields: TransfersFieldRefs;
  */
 export interface Prisma__TransfersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   fromAccount<T extends Prisma.AccountsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountsDefaultArgs<ExtArgs>>): Prisma.Prisma__AccountsClient<runtime.Types.Result.GetResult<Prisma.$AccountsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   toAccount<T extends Prisma.AccountsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountsDefaultArgs<ExtArgs>>): Prisma.Prisma__AccountsClient<runtime.Types.Result.GetResult<Prisma.$AccountsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1126,6 +1298,7 @@ export interface Prisma__TransfersClient<T, Null = never, ExtArgs extends runtim
  */
 export interface TransfersFieldRefs {
   readonly id: Prisma.FieldRef<"Transfers", 'String'>
+  readonly userId: Prisma.FieldRef<"Transfers", 'String'>
   readonly fromAccountId: Prisma.FieldRef<"Transfers", 'String'>
   readonly toAccountId: Prisma.FieldRef<"Transfers", 'String'>
   readonly amount: Prisma.FieldRef<"Transfers", 'Decimal'>

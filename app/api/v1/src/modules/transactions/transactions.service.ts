@@ -14,23 +14,54 @@ export class TransactionsService {
       categoryId: dto.categoryId,
     });
 
-    const transaction = await this.prisma.transactions.create({
-      data: {
-        userId,
-        accountId: dto.accountId,
-        categoryId: dto.categoryId,
-        type: dto.type,
-        amount: dto.amount,
-        transactionDate: new Date(dto.transactionDate),
-        note: dto.note,
-      },
-    });
+    return this.prisma.$transaction(async (tx) => {
+      const account = await tx.accounts.findUnique({
+        where: {
+          id: dto.accountId,
+        },
+      });
+      if (!account) throw new NotFoundException('Account not found');
+      const transaction = await tx.transactions.create({
+        data: {
+          userId,
+          accountId: dto.accountId,
+          amount: dto.amount,
+          categoryId: dto.categoryId,
+          subCategoryId: dto.subCategoryId || null,
+          type: dto.type,
+          transactionDate: new Date(dto.transactionDate),
+          note: dto.note,
+        },
+      });
+      const balanceChange =
+        transaction.type === 'INCOME'
+          ? transaction.amount
+          : transaction.amount.neg();
 
-    return {
-      success: true,
-      message: 'Transaction created successfully',
-      data: { transaction },
-    };
+      await tx.accounts.update({
+        where: {
+          id: dto.accountId,
+        },
+        data: {
+          balance: {
+            increment: balanceChange,
+          },
+        },
+      });
+      const newTransaction = await tx.transactions.findUnique({
+        where: {
+          id: transaction.id,
+        },
+        include: {
+          account: true,
+        },
+      });
+      return {
+        success: true,
+        message: 'Transaction created successfully',
+        data: newTransaction,
+      };
+    });
   }
 
   async getTransactions({
@@ -68,6 +99,7 @@ export class TransactionsService {
       include: {
         account: true,
         category: true,
+        subcategory: true,
       },
     });
 
@@ -87,6 +119,7 @@ export class TransactionsService {
       include: {
         account: true,
         category: true,
+        subcategory: true,
       },
     });
 
@@ -108,58 +141,122 @@ export class TransactionsService {
     userId: string;
     dto: UpdateTransactionDto;
   }) {
-    const existingTransaction = await this.prisma.transactions.findFirst({
-      where: {
-        id: transactionId,
-        userId,
-      },
+    return this.prisma.$transaction(async (tx) => {
+      const transaction = await tx.transactions.findUnique({
+        where: {
+          id: transactionId,
+        },
+      });
+      if (!transaction) throw new NotFoundException('Transaction not found');
+      const account = await tx.accounts.findFirst({
+        where: {
+          id: dto.accountId,
+          userId,
+        },
+      });
+      if (!account) throw new NotFoundException('Account not found');
+      const oldBalanceChange =
+        transaction.type === 'INCOME'
+          ? transaction.amount.neg()
+          : transaction.amount;
+
+      await tx.accounts.update({
+        where: {
+          id: transaction.accountId,
+        },
+        data: {
+          balance: {
+            increment: oldBalanceChange,
+          },
+        },
+      });
+
+      const updated = await tx.transactions.update({
+        where: {
+          id: transactionId,
+        },
+        data: {
+          accountId: dto.accountId,
+          amount: dto.amount,
+          type: dto.type,
+          categoryId: dto.categoryId,
+          subCategoryId: dto.subCategoryId,
+          note: dto.note,
+        },
+      });
+      const balanceChange =
+        updated.type === 'INCOME' ? updated.amount : updated.amount.neg();
+
+      await tx.accounts.update({
+        where: {
+          id: dto.accountId,
+          userId,
+        },
+        data: {
+          balance: {
+            increment: balanceChange,
+          },
+        },
+      });
+      const updatedTransacttion = await tx.transactions.findFirst({
+        where: {
+          id: transactionId,
+          userId,
+        },
+        include: {
+          account: true,
+        },
+      });
+      return {
+        success: true,
+        message: 'Transaction updated successfully',
+        data: updatedTransacttion,
+      };
     });
-    if (!existingTransaction) throw new NotFoundException('Transaction not found');
-
-    const accountId = dto.accountId || existingTransaction.accountId;
-    const categoryId = dto.categoryId || existingTransaction.categoryId;
-    if (dto.accountId || dto.categoryId) {
-      await this.ensureAccountAndCategoryOwnership({ userId, accountId, categoryId });
-    }
-
-    const transaction = await this.prisma.transactions.update({
-      where: { id: transactionId },
-      data: {
-        accountId: dto.accountId,
-        categoryId: dto.categoryId,
-        type: dto.type,
-        amount: dto.amount,
-        transactionDate: dto.transactionDate
-          ? new Date(dto.transactionDate)
-          : undefined,
-        note: dto.note,
-      },
-    });
-
-    return {
-      success: true,
-      message: 'Transaction updated successfully',
-      data: { transaction },
-    };
   }
 
   async deleteTransaction(transactionId: string, userId: string) {
-    const existingTransaction = await this.prisma.transactions.findFirst({
-      where: {
-        id: transactionId,
-        userId,
-      },
-    });
-    if (!existingTransaction) throw new NotFoundException('Transaction not found');
+    return this.prisma.$transaction(async (tx) => {
+      const transaction = await tx.transactions.findFirst({
+        where: {
+          id: transactionId,
+          userId,
+        },
+      });
+      if (!transaction) throw new NotFoundException('Transaction not found');
+      const account = await tx.accounts.findFirst({
+        where: {
+          id: transaction.accountId,
+          userId,
+        },
+      });
+      if (!account) throw new NotFoundException('Account not found');
+      const balanceChange =
+        transaction.type === 'INCOME'
+          ? transaction.amount.neg()
+          : transaction.amount;
 
-    await this.prisma.transactions.delete({
-      where: { id: transactionId },
-    });
+      await tx.accounts.update({
+        where: {
+          id: transaction.accountId,
+        },
+        data: {
+          balance: {
+            increment: balanceChange,
+          },
+        },
+      });
 
-    return {
-      success: true,
-      message: 'Transaction deleted successfully',
-    };
+      await tx.transactions.delete({
+        where: {
+          id: transactionId,
+        },
+      });
+      return {
+        success: true,
+        message: 'Transaction deleted successfully',
+      };
+    });
   }
 
   private async ensureAccountAndCategoryOwnership({

@@ -9,6 +9,7 @@ import { AccountModule } from './modules/account/account.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { CategoryModule } from './modules/category/category.module';
+import { TransfersModule } from './modules/transfers/transfers.module';
 @Module({
   imports: [
     AuthModule,
@@ -19,6 +20,7 @@ import { CategoryModule } from './modules/category/category.module';
     DashboardModule,
     TransactionsModule,
     CategoryModule,
+    TransfersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

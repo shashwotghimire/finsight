@@ -244,6 +244,7 @@ export type UserWhereInput = {
   subscriptions?: Prisma.SubscriptionListRelationFilter
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsListRelationFilter
   taxes?: Prisma.TaxesListRelationFilter
+  transfers?: Prisma.TransfersListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -265,6 +266,7 @@ export type UserOrderByWithRelationInput = {
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsOrderByRelationAggregateInput
   taxes?: Prisma.TaxesOrderByRelationAggregateInput
+  transfers?: Prisma.TransfersOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -289,6 +291,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   subscriptions?: Prisma.SubscriptionListRelationFilter
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsListRelationFilter
   taxes?: Prisma.TaxesListRelationFilter
+  transfers?: Prisma.TransfersListRelationFilter
 }, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -346,6 +349,7 @@ export type UserCreateInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -367,6 +371,7 @@ export type UserUncheckedCreateInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -388,6 +393,7 @@ export type UserUpdateInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -409,6 +415,7 @@ export type UserUncheckedUpdateInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -582,6 +589,20 @@ export type UserUpdateOneRequiredWithoutSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.UserUpdateWithoutSubscriptionsInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
 }
 
+export type UserCreateNestedOneWithoutTransfersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransfersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTransfersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransfersInput
+  upsert?: Prisma.UserUpsertWithoutTransfersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransfersInput, Prisma.UserUpdateWithoutTransfersInput>, Prisma.UserUncheckedUpdateWithoutTransfersInput>
+}
+
 export type UserCreateNestedOneWithoutAnalyticsSnapshotsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAnalyticsSnapshotsInput, Prisma.UserUncheckedCreateWithoutAnalyticsSnapshotsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAnalyticsSnapshotsInput
@@ -628,6 +649,7 @@ export type UserCreateWithoutAccountsInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -648,6 +670,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -684,6 +707,7 @@ export type UserUpdateWithoutAccountsInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -704,6 +728,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -724,6 +749,7 @@ export type UserCreateWithoutTransactionsInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -744,6 +770,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -780,6 +807,7 @@ export type UserUpdateWithoutTransactionsInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -800,6 +828,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoriesInput = {
@@ -820,6 +849,7 @@ export type UserCreateWithoutCategoriesInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -840,6 +870,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -876,6 +907,7 @@ export type UserUpdateWithoutCategoriesInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -896,6 +928,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubscriptionsInput = {
@@ -916,6 +949,7 @@ export type UserCreateWithoutSubscriptionsInput = {
   transactions?: Prisma.TransactionsCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscriptionsInput = {
@@ -936,6 +970,7 @@ export type UserUncheckedCreateWithoutSubscriptionsInput = {
   transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscriptionsInput = {
@@ -972,6 +1007,7 @@ export type UserUpdateWithoutSubscriptionsInput = {
   transactions?: Prisma.TransactionsUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscriptionsInput = {
@@ -990,6 +1026,107 @@ export type UserUncheckedUpdateWithoutSubscriptionsInput = {
   accounts?: Prisma.AccountsUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionsUncheckedUpdateManyWithoutUserNestedInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
+  taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTransfersInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  profilePicUrl?: string | null
+  type?: $Enums.UserType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  googleId?: string | null
+  googleAccessToken?: string | null
+  googleRefreshToken?: string | null
+  googleTokenExpiry?: Date | string | null
+  accounts?: Prisma.AccountsCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionsCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
+  taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTransfersInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  profilePicUrl?: string | null
+  type?: $Enums.UserType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  googleId?: string | null
+  googleAccessToken?: string | null
+  googleRefreshToken?: string | null
+  googleTokenExpiry?: Date | string | null
+  accounts?: Prisma.AccountsUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
+  taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTransfersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+}
+
+export type UserUpsertWithoutTransfersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTransfersInput, Prisma.UserUncheckedUpdateWithoutTransfersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTransfersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTransfersInput, Prisma.UserUncheckedUpdateWithoutTransfersInput>
+}
+
+export type UserUpdateWithoutTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleAccessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accounts?: Prisma.AccountsUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionsUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
+  taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleAccessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accounts?: Prisma.AccountsUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionsUncheckedUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1012,6 +1149,7 @@ export type UserCreateWithoutAnalyticsSnapshotsInput = {
   transactions?: Prisma.TransactionsCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAnalyticsSnapshotsInput = {
@@ -1032,6 +1170,7 @@ export type UserUncheckedCreateWithoutAnalyticsSnapshotsInput = {
   transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAnalyticsSnapshotsInput = {
@@ -1068,6 +1207,7 @@ export type UserUpdateWithoutAnalyticsSnapshotsInput = {
   transactions?: Prisma.TransactionsUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAnalyticsSnapshotsInput = {
@@ -1088,6 +1228,7 @@ export type UserUncheckedUpdateWithoutAnalyticsSnapshotsInput = {
   transactions?: Prisma.TransactionsUncheckedUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTaxesInput = {
@@ -1108,6 +1249,7 @@ export type UserCreateWithoutTaxesInput = {
   transactions?: Prisma.TransactionsCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTaxesInput = {
@@ -1128,6 +1270,7 @@ export type UserUncheckedCreateWithoutTaxesInput = {
   transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTaxesInput = {
@@ -1164,6 +1307,7 @@ export type UserUpdateWithoutTaxesInput = {
   transactions?: Prisma.TransactionsUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTaxesInput = {
@@ -1184,6 +1328,7 @@ export type UserUncheckedUpdateWithoutTaxesInput = {
   transactions?: Prisma.TransactionsUncheckedUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1198,6 +1343,7 @@ export type UserCountOutputType = {
   subscriptions: number
   analyticsSnapshots: number
   taxes: number
+  transfers: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1207,6 +1353,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   subscriptions?: boolean | UserCountOutputTypeCountSubscriptionsArgs
   analyticsSnapshots?: boolean | UserCountOutputTypeCountAnalyticsSnapshotsArgs
   taxes?: boolean | UserCountOutputTypeCountTaxesArgs
+  transfers?: boolean | UserCountOutputTypeCountTransfersArgs
 }
 
 /**
@@ -1261,6 +1408,13 @@ export type UserCountOutputTypeCountTaxesArgs<ExtArgs extends runtime.Types.Exte
   where?: Prisma.TaxesWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTransfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransfersWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1281,6 +1435,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
   analyticsSnapshots?: boolean | Prisma.User$analyticsSnapshotsArgs<ExtArgs>
   taxes?: boolean | Prisma.User$taxesArgs<ExtArgs>
+  transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1337,6 +1492,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
   analyticsSnapshots?: boolean | Prisma.User$analyticsSnapshotsArgs<ExtArgs>
   taxes?: boolean | Prisma.User$taxesArgs<ExtArgs>
+  transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1351,6 +1507,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
     analyticsSnapshots: Prisma.$AnalyticsSnapshotsPayload<ExtArgs>[]
     taxes: Prisma.$TaxesPayload<ExtArgs>[]
+    transfers: Prisma.$TransfersPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1765,6 +1922,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   subscriptions<T extends Prisma.User$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   analyticsSnapshots<T extends Prisma.User$analyticsSnapshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$analyticsSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnalyticsSnapshotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   taxes<T extends Prisma.User$taxesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$taxesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaxesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transfers<T extends Prisma.User$transfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransfersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2335,6 +2493,30 @@ export type User$taxesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.TaxesScalarFieldEnum | Prisma.TaxesScalarFieldEnum[]
+}
+
+/**
+ * User.transfers
+ */
+export type User$transfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transfers
+   */
+  select?: Prisma.TransfersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transfers
+   */
+  omit?: Prisma.TransfersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransfersInclude<ExtArgs> | null
+  where?: Prisma.TransfersWhereInput
+  orderBy?: Prisma.TransfersOrderByWithRelationInput | Prisma.TransfersOrderByWithRelationInput[]
+  cursor?: Prisma.TransfersWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransfersScalarFieldEnum | Prisma.TransfersScalarFieldEnum[]
 }
 
 /**
