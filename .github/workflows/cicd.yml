@@ -10,7 +10,7 @@ jobs:
     name: Build docker image
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/${{github.repository_owner}}/finsight-api
+      IMAGE_NAME: ghcr.io/shashwotghimire/finsight-api
 
     steps:
       - name: Checkout code
