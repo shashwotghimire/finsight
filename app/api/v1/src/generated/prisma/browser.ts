@@ -67,3 +67,13 @@ export type Taxes = Prisma.TaxesModel
  * 
  */
 export type TransactionTaxes = Prisma.TransactionTaxesModel
+/**
+ * Model Budget
+ * 
+ */
+export type Budget = Prisma.BudgetModel
+/**
+ * Model BudgetAllocation
+ * 
+ */
+export type BudgetAllocation = Prisma.BudgetAllocationModel

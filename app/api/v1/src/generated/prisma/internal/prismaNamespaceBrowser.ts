@@ -60,7 +60,9 @@ export const ModelName = {
   Transfers: 'Transfers',
   AnalyticsSnapshots: 'AnalyticsSnapshots',
   Taxes: 'Taxes',
-  TransactionTaxes: 'TransactionTaxes'
+  TransactionTaxes: 'TransactionTaxes',
+  Budget: 'Budget',
+  BudgetAllocation: 'BudgetAllocation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -86,6 +88,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   profilePicUrl: 'profilePicUrl',
   type: 'type',
+  stripeCustomerId: 'stripeCustomerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   googleId: 'googleId',
@@ -154,6 +157,8 @@ export const SubscriptionScalarFieldEnum = {
   price: 'price',
   startDate: 'startDate',
   status: 'status',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  currentPeriodEnd: 'currentPeriodEnd',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -210,6 +215,33 @@ export const TransactionTaxesScalarFieldEnum = {
 } as const
 
 export type TransactionTaxesScalarFieldEnum = (typeof TransactionTaxesScalarFieldEnum)[keyof typeof TransactionTaxesScalarFieldEnum]
+
+
+export const BudgetScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  period: 'period',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  totalLimit: 'totalLimit',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
+
+
+export const BudgetAllocationScalarFieldEnum = {
+  id: 'id',
+  budgetId: 'budgetId',
+  categoryId: 'categoryId',
+  accountId: 'accountId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BudgetAllocationScalarFieldEnum = (typeof BudgetAllocationScalarFieldEnum)[keyof typeof BudgetAllocationScalarFieldEnum]
 
 
 export const SortOrder = {

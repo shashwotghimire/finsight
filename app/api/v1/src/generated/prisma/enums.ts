@@ -56,3 +56,12 @@ export const Currency = {
 } as const
 
 export type Currency = (typeof Currency)[keyof typeof Currency]
+
+
+export const BudgetPeriod = {
+  MONTHLY: 'MONTHLY',
+  WEEKLY: 'WEEKLY',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type BudgetPeriod = (typeof BudgetPeriod)[keyof typeof BudgetPeriod]

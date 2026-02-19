@@ -40,6 +40,8 @@ export type SubscriptionMinAggregateOutputType = {
   price: runtime.Decimal | null
   startDate: Date | null
   status: $Enums.SubscriptionStatus | null
+  stripeSubscriptionId: string | null
+  currentPeriodEnd: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,8 @@ export type SubscriptionMaxAggregateOutputType = {
   price: runtime.Decimal | null
   startDate: Date | null
   status: $Enums.SubscriptionStatus | null
+  stripeSubscriptionId: string | null
+  currentPeriodEnd: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +64,8 @@ export type SubscriptionCountAggregateOutputType = {
   price: number
   startDate: number
   status: number
+  stripeSubscriptionId: number
+  currentPeriodEnd: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -80,6 +86,8 @@ export type SubscriptionMinAggregateInputType = {
   price?: true
   startDate?: true
   status?: true
+  stripeSubscriptionId?: true
+  currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,6 +98,8 @@ export type SubscriptionMaxAggregateInputType = {
   price?: true
   startDate?: true
   status?: true
+  stripeSubscriptionId?: true
+  currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +110,8 @@ export type SubscriptionCountAggregateInputType = {
   price?: true
   startDate?: true
   status?: true
+  stripeSubscriptionId?: true
+  currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -197,6 +209,8 @@ export type SubscriptionGroupByOutputType = {
   price: runtime.Decimal
   startDate: Date
   status: $Enums.SubscriptionStatus
+  stripeSubscriptionId: string | null
+  currentPeriodEnd: Date | null
   createdAt: Date
   updatedAt: Date
   _count: SubscriptionCountAggregateOutputType | null
@@ -230,6 +244,8 @@ export type SubscriptionWhereInput = {
   price?: Prisma.DecimalFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -241,6 +257,8 @@ export type SubscriptionOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripeSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -255,6 +273,8 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.DecimalFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -266,6 +286,8 @@ export type SubscriptionOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripeSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscriptionCountOrderByAggregateInput
@@ -284,6 +306,8 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   price?: Prisma.DecimalWithAggregatesFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"Subscription"> | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
 }
@@ -293,6 +317,8 @@ export type SubscriptionCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   status?: $Enums.SubscriptionStatus
+  stripeSubscriptionId?: string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSubscriptionsInput
@@ -304,6 +330,8 @@ export type SubscriptionUncheckedCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   status?: $Enums.SubscriptionStatus
+  stripeSubscriptionId?: string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -313,6 +341,8 @@ export type SubscriptionUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -324,6 +354,8 @@ export type SubscriptionUncheckedUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -334,6 +366,8 @@ export type SubscriptionCreateManyInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   status?: $Enums.SubscriptionStatus
+  stripeSubscriptionId?: string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -343,6 +377,8 @@ export type SubscriptionUpdateManyMutationInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -353,6 +389,8 @@ export type SubscriptionUncheckedUpdateManyInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -373,6 +411,8 @@ export type SubscriptionCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripeSubscriptionId?: Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -387,6 +427,8 @@ export type SubscriptionMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripeSubscriptionId?: Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -397,6 +439,8 @@ export type SubscriptionMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  stripeSubscriptionId?: Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -456,6 +500,8 @@ export type SubscriptionCreateWithoutUserInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   status?: $Enums.SubscriptionStatus
+  stripeSubscriptionId?: string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -465,6 +511,8 @@ export type SubscriptionUncheckedCreateWithoutUserInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   status?: $Enums.SubscriptionStatus
+  stripeSubscriptionId?: string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -504,6 +552,8 @@ export type SubscriptionScalarWhereInput = {
   price?: Prisma.DecimalFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
 }
@@ -513,6 +563,8 @@ export type SubscriptionCreateManyUserInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   status?: $Enums.SubscriptionStatus
+  stripeSubscriptionId?: string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -522,6 +574,8 @@ export type SubscriptionUpdateWithoutUserInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -531,6 +585,8 @@ export type SubscriptionUncheckedUpdateWithoutUserInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -540,6 +596,8 @@ export type SubscriptionUncheckedUpdateManyWithoutUserInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -552,6 +610,8 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   price?: boolean
   startDate?: boolean
   status?: boolean
+  stripeSubscriptionId?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -563,6 +623,8 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   price?: boolean
   startDate?: boolean
   status?: boolean
+  stripeSubscriptionId?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -574,6 +636,8 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   price?: boolean
   startDate?: boolean
   status?: boolean
+  stripeSubscriptionId?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -585,11 +649,13 @@ export type SubscriptionSelectScalar = {
   price?: boolean
   startDate?: boolean
   status?: boolean
+  stripeSubscriptionId?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "price" | "startDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "price" | "startDate" | "status" | "stripeSubscriptionId" | "currentPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -611,6 +677,8 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     price: runtime.Decimal
     startDate: Date
     status: $Enums.SubscriptionStatus
+    stripeSubscriptionId: string | null
+    currentPeriodEnd: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["subscription"]>
@@ -1042,6 +1110,8 @@ export interface SubscriptionFieldRefs {
   readonly price: Prisma.FieldRef<"Subscription", 'Decimal'>
   readonly startDate: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly status: Prisma.FieldRef<"Subscription", 'SubscriptionStatus'>
+  readonly stripeSubscriptionId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly currentPeriodEnd: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscription", 'DateTime'>
 }

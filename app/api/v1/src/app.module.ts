@@ -10,6 +10,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { CategoryModule } from './modules/category/category.module';
 import { TransfersModule } from './modules/transfers/transfers.module';
+import { StripeModule } from './modules/stripe/stripe.module';
 @Module({
   imports: [
     AuthModule,
@@ -21,6 +22,7 @@ import { TransfersModule } from './modules/transfers/transfers.module';
     TransactionsModule,
     CategoryModule,
     TransfersModule,
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

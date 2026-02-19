@@ -45,15 +45,22 @@ enum Currency {
   USD
 }
 
+enum BudgetPeriod {
+  MONTHLY
+  WEEKLY
+  CUSTOM
+}
+
 model User {
-  id            String   @id @default(cuid())
-  name          String
-  email         String   @unique
-  password      String
-  profilePicUrl String?
-  type          UserType @default(FREE)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt()
+  id               String   @id @default(cuid())
+  name             String
+  email            String   @unique
+  password         String
+  profilePicUrl    String?
+  type             UserType @default(FREE)
+  stripeCustomerId String?  @unique()
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt()
 
   //oauth
   googleId           String?   @unique
@@ -69,21 +76,23 @@ model User {
   analyticsSnapshots AnalyticsSnapshots[]
   taxes              Taxes[]
   transfers          Transfers[]
+  budgets            Budget[]
 }
 
 model Accounts {
-  id                String         @id @default(cuid())
-  user              User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String             @id @default(cuid())
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId            String
   name              String
-  type              AccountType    @default(PERSONAL)
-  currency          Currency       @default(NPR)
+  type              AccountType        @default(PERSONAL)
+  currency          Currency           @default(NPR)
   balance           Decimal
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   transactions      Transactions[]
-  outgoingTransfers Transfers[]    @relation("FromAccount")
-  incomingTransfers Transfers[]    @relation("ToAccount")
+  outgoingTransfers Transfers[]        @relation("FromAccount")
+  incomingTransfers Transfers[]        @relation("ToAccount")
+  budgetAllocations BudgetAllocation[]
 }
 
 model Transactions {
@@ -111,12 +120,13 @@ model Transactions {
 }
 
 model Category {
-  id            String         @id @default(cuid())
-  name          String
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String
-  transactions  Transactions[]
-  subCategories SubCategory[]
+  id                String             @id @default(cuid())
+  name              String
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  transactions      Transactions[]
+  subCategories     SubCategory[]
+  budgetAllocations BudgetAllocation[]
 }
 
 model SubCategory {
@@ -130,14 +140,16 @@ model SubCategory {
 }
 
 model Subscription {
-  id        String             @id @default(cuid())
-  user      User               @relation(fields: [userId], references: [id])
-  userId    String
-  price     Decimal
-  startDate DateTime
-  status    SubscriptionStatus @default(EXPIRED)
-  createdAt DateTime           @default(now())
-  updatedAt DateTime           @updatedAt
+  id                   String             @id @default(cuid())
+  user                 User               @relation(fields: [userId], references: [id])
+  userId               String
+  price                Decimal
+  startDate            DateTime
+  status               SubscriptionStatus @default(EXPIRED)
+  stripeSubscriptionId String?
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
 }
 
 model Transfers {
@@ -185,4 +197,33 @@ model TransactionTaxes {
   tax           Taxes        @relation(fields: [taxId], references: [id])
   taxId         String
   amount        Decimal
+}
+
+model Budget {
+  id                String             @id @default(cuid())
+  user              User               @relation(fields: [userId], references: [id])
+  userId            String
+  name              String?
+  period            BudgetPeriod
+  startDate         DateTime
+  endDate           DateTime
+  totalLimit        Decimal?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt()
+  budgetAllocations BudgetAllocation[]
+}
+
+model BudgetAllocation {
+  id         String    @id @default(cuid())
+  budget     Budget    @relation(fields: [budgetId], references: [id])
+  budgetId   String
+  // category budget
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  // account budget
+  account    Accounts? @relation(fields: [accountId], references: [id])
+  accountId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 }

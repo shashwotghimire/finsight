@@ -31,6 +31,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   profilePicUrl: string | null
   type: $Enums.UserType | null
+  stripeCustomerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   googleId: string | null
@@ -46,6 +47,7 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   profilePicUrl: string | null
   type: $Enums.UserType | null
+  stripeCustomerId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   googleId: string | null
@@ -61,6 +63,7 @@ export type UserCountAggregateOutputType = {
   password: number
   profilePicUrl: number
   type: number
+  stripeCustomerId: number
   createdAt: number
   updatedAt: number
   googleId: number
@@ -78,6 +81,7 @@ export type UserMinAggregateInputType = {
   password?: true
   profilePicUrl?: true
   type?: true
+  stripeCustomerId?: true
   createdAt?: true
   updatedAt?: true
   googleId?: true
@@ -93,6 +97,7 @@ export type UserMaxAggregateInputType = {
   password?: true
   profilePicUrl?: true
   type?: true
+  stripeCustomerId?: true
   createdAt?: true
   updatedAt?: true
   googleId?: true
@@ -108,6 +113,7 @@ export type UserCountAggregateInputType = {
   password?: true
   profilePicUrl?: true
   type?: true
+  stripeCustomerId?: true
   createdAt?: true
   updatedAt?: true
   googleId?: true
@@ -196,6 +202,7 @@ export type UserGroupByOutputType = {
   password: string
   profilePicUrl: string | null
   type: $Enums.UserType
+  stripeCustomerId: string | null
   createdAt: Date
   updatedAt: Date
   googleId: string | null
@@ -232,6 +239,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   profilePicUrl?: Prisma.StringNullableFilter<"User"> | string | null
   type?: Prisma.EnumUserTypeFilter<"User"> | $Enums.UserType
+  stripeCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   googleId?: Prisma.StringNullableFilter<"User"> | string | null
@@ -245,6 +253,7 @@ export type UserWhereInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsListRelationFilter
   taxes?: Prisma.TaxesListRelationFilter
   transfers?: Prisma.TransfersListRelationFilter
+  budgets?: Prisma.BudgetListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -254,6 +263,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   profilePicUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -267,11 +277,13 @@ export type UserOrderByWithRelationInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsOrderByRelationAggregateInput
   taxes?: Prisma.TaxesOrderByRelationAggregateInput
   transfers?: Prisma.TransfersOrderByRelationAggregateInput
+  budgets?: Prisma.BudgetOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  stripeCustomerId?: string
   googleId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
@@ -292,7 +304,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsListRelationFilter
   taxes?: Prisma.TaxesListRelationFilter
   transfers?: Prisma.TransfersListRelationFilter
-}, "id" | "email" | "googleId">
+  budgets?: Prisma.BudgetListRelationFilter
+}, "id" | "email" | "stripeCustomerId" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -301,6 +314,7 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   profilePicUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -322,6 +336,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   profilePicUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   type?: Prisma.EnumUserTypeWithAggregatesFilter<"User"> | $Enums.UserType
+  stripeCustomerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   googleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -337,6 +352,7 @@ export type UserCreateInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -350,6 +366,7 @@ export type UserCreateInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -359,6 +376,7 @@ export type UserUncheckedCreateInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -372,6 +390,7 @@ export type UserUncheckedCreateInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -381,6 +400,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -394,6 +414,7 @@ export type UserUpdateInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -403,6 +424,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -416,6 +438,7 @@ export type UserUncheckedUpdateInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -425,6 +448,7 @@ export type UserCreateManyInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -440,6 +464,7 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -455,6 +480,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -470,6 +496,7 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   profilePicUrl?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
@@ -485,6 +512,7 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   profilePicUrl?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
@@ -500,6 +528,7 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   profilePicUrl?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
@@ -631,6 +660,20 @@ export type UserUpdateOneRequiredWithoutTaxesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTaxesInput, Prisma.UserUpdateWithoutTaxesInput>, Prisma.UserUncheckedUpdateWithoutTaxesInput>
 }
 
+export type UserCreateNestedOneWithoutBudgetsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBudgetsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBudgetsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBudgetsInput
+  upsert?: Prisma.UserUpsertWithoutBudgetsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBudgetsInput, Prisma.UserUpdateWithoutBudgetsInput>, Prisma.UserUncheckedUpdateWithoutBudgetsInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   name: string
@@ -638,6 +681,7 @@ export type UserCreateWithoutAccountsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -650,6 +694,7 @@ export type UserCreateWithoutAccountsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -659,6 +704,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -671,6 +717,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -696,6 +743,7 @@ export type UserUpdateWithoutAccountsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -708,6 +756,7 @@ export type UserUpdateWithoutAccountsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -717,6 +766,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -729,6 +779,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -738,6 +789,7 @@ export type UserCreateWithoutTransactionsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -750,6 +802,7 @@ export type UserCreateWithoutTransactionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -759,6 +812,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -771,6 +825,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -796,6 +851,7 @@ export type UserUpdateWithoutTransactionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -808,6 +864,7 @@ export type UserUpdateWithoutTransactionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -817,6 +874,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -829,6 +887,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoriesInput = {
@@ -838,6 +897,7 @@ export type UserCreateWithoutCategoriesInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -850,6 +910,7 @@ export type UserCreateWithoutCategoriesInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -859,6 +920,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -871,6 +933,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -896,6 +959,7 @@ export type UserUpdateWithoutCategoriesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -908,6 +972,7 @@ export type UserUpdateWithoutCategoriesInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -917,6 +982,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -929,6 +995,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubscriptionsInput = {
@@ -938,6 +1005,7 @@ export type UserCreateWithoutSubscriptionsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -950,6 +1018,7 @@ export type UserCreateWithoutSubscriptionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscriptionsInput = {
@@ -959,6 +1028,7 @@ export type UserUncheckedCreateWithoutSubscriptionsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -971,6 +1041,7 @@ export type UserUncheckedCreateWithoutSubscriptionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscriptionsInput = {
@@ -996,6 +1067,7 @@ export type UserUpdateWithoutSubscriptionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1008,6 +1080,7 @@ export type UserUpdateWithoutSubscriptionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscriptionsInput = {
@@ -1017,6 +1090,7 @@ export type UserUncheckedUpdateWithoutSubscriptionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1029,6 +1103,7 @@ export type UserUncheckedUpdateWithoutSubscriptionsInput = {
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransfersInput = {
@@ -1038,6 +1113,7 @@ export type UserCreateWithoutTransfersInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -1050,6 +1126,7 @@ export type UserCreateWithoutTransfersInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransfersInput = {
@@ -1059,6 +1136,7 @@ export type UserUncheckedCreateWithoutTransfersInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -1071,6 +1149,7 @@ export type UserUncheckedCreateWithoutTransfersInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransfersInput = {
@@ -1096,6 +1175,7 @@ export type UserUpdateWithoutTransfersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1108,6 +1188,7 @@ export type UserUpdateWithoutTransfersInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransfersInput = {
@@ -1117,6 +1198,7 @@ export type UserUncheckedUpdateWithoutTransfersInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1129,6 +1211,7 @@ export type UserUncheckedUpdateWithoutTransfersInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAnalyticsSnapshotsInput = {
@@ -1138,6 +1221,7 @@ export type UserCreateWithoutAnalyticsSnapshotsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -1150,6 +1234,7 @@ export type UserCreateWithoutAnalyticsSnapshotsInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAnalyticsSnapshotsInput = {
@@ -1159,6 +1244,7 @@ export type UserUncheckedCreateWithoutAnalyticsSnapshotsInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -1171,6 +1257,7 @@ export type UserUncheckedCreateWithoutAnalyticsSnapshotsInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAnalyticsSnapshotsInput = {
@@ -1196,6 +1283,7 @@ export type UserUpdateWithoutAnalyticsSnapshotsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1208,6 +1296,7 @@ export type UserUpdateWithoutAnalyticsSnapshotsInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAnalyticsSnapshotsInput = {
@@ -1217,6 +1306,7 @@ export type UserUncheckedUpdateWithoutAnalyticsSnapshotsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1229,6 +1319,7 @@ export type UserUncheckedUpdateWithoutAnalyticsSnapshotsInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTaxesInput = {
@@ -1238,6 +1329,7 @@ export type UserCreateWithoutTaxesInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -1250,6 +1342,7 @@ export type UserCreateWithoutTaxesInput = {
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTaxesInput = {
@@ -1259,6 +1352,7 @@ export type UserUncheckedCreateWithoutTaxesInput = {
   password: string
   profilePicUrl?: string | null
   type?: $Enums.UserType
+  stripeCustomerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   googleId?: string | null
@@ -1271,6 +1365,7 @@ export type UserUncheckedCreateWithoutTaxesInput = {
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTaxesInput = {
@@ -1296,6 +1391,7 @@ export type UserUpdateWithoutTaxesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1308,6 +1404,7 @@ export type UserUpdateWithoutTaxesInput = {
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTaxesInput = {
@@ -1317,6 +1414,7 @@ export type UserUncheckedUpdateWithoutTaxesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1328,6 +1426,115 @@ export type UserUncheckedUpdateWithoutTaxesInput = {
   transactions?: Prisma.TransactionsUncheckedUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
   analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutBudgetsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  profilePicUrl?: string | null
+  type?: $Enums.UserType
+  stripeCustomerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  googleId?: string | null
+  googleAccessToken?: string | null
+  googleRefreshToken?: string | null
+  googleTokenExpiry?: Date | string | null
+  accounts?: Prisma.AccountsCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionsCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsCreateNestedManyWithoutUserInput
+  taxes?: Prisma.TaxesCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBudgetsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  profilePicUrl?: string | null
+  type?: $Enums.UserType
+  stripeCustomerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  googleId?: string | null
+  googleAccessToken?: string | null
+  googleRefreshToken?: string | null
+  googleTokenExpiry?: Date | string | null
+  accounts?: Prisma.AccountsUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionsUncheckedCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedCreateNestedManyWithoutUserInput
+  taxes?: Prisma.TaxesUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransfersUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBudgetsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>
+}
+
+export type UserUpsertWithoutBudgetsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBudgetsInput, Prisma.UserUncheckedUpdateWithoutBudgetsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBudgetsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBudgetsInput, Prisma.UserUncheckedUpdateWithoutBudgetsInput>
+}
+
+export type UserUpdateWithoutBudgetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleAccessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accounts?: Prisma.AccountsUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionsUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsUpdateManyWithoutUserNestedInput
+  taxes?: Prisma.TaxesUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransfersUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBudgetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleAccessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  accounts?: Prisma.AccountsUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionsUncheckedUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  analyticsSnapshots?: Prisma.AnalyticsSnapshotsUncheckedUpdateManyWithoutUserNestedInput
+  taxes?: Prisma.TaxesUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransfersUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1344,6 +1551,7 @@ export type UserCountOutputType = {
   analyticsSnapshots: number
   taxes: number
   transfers: number
+  budgets: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1354,6 +1562,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   analyticsSnapshots?: boolean | UserCountOutputTypeCountAnalyticsSnapshotsArgs
   taxes?: boolean | UserCountOutputTypeCountTaxesArgs
   transfers?: boolean | UserCountOutputTypeCountTransfersArgs
+  budgets?: boolean | UserCountOutputTypeCountBudgetsArgs
 }
 
 /**
@@ -1415,6 +1624,13 @@ export type UserCountOutputTypeCountTransfersArgs<ExtArgs extends runtime.Types.
   where?: Prisma.TransfersWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBudgetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BudgetWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1423,6 +1639,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   profilePicUrl?: boolean
   type?: boolean
+  stripeCustomerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   googleId?: boolean
@@ -1436,6 +1653,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   analyticsSnapshots?: boolean | Prisma.User$analyticsSnapshotsArgs<ExtArgs>
   taxes?: boolean | Prisma.User$taxesArgs<ExtArgs>
   transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
+  budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1446,6 +1664,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   profilePicUrl?: boolean
   type?: boolean
+  stripeCustomerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   googleId?: boolean
@@ -1461,6 +1680,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   profilePicUrl?: boolean
   type?: boolean
+  stripeCustomerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   googleId?: boolean
@@ -1476,6 +1696,7 @@ export type UserSelectScalar = {
   password?: boolean
   profilePicUrl?: boolean
   type?: boolean
+  stripeCustomerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   googleId?: boolean
@@ -1484,7 +1705,7 @@ export type UserSelectScalar = {
   googleTokenExpiry?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "profilePicUrl" | "type" | "createdAt" | "updatedAt" | "googleId" | "googleAccessToken" | "googleRefreshToken" | "googleTokenExpiry", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "profilePicUrl" | "type" | "stripeCustomerId" | "createdAt" | "updatedAt" | "googleId" | "googleAccessToken" | "googleRefreshToken" | "googleTokenExpiry", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
@@ -1493,6 +1714,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   analyticsSnapshots?: boolean | Prisma.User$analyticsSnapshotsArgs<ExtArgs>
   taxes?: boolean | Prisma.User$taxesArgs<ExtArgs>
   transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
+  budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1508,6 +1730,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     analyticsSnapshots: Prisma.$AnalyticsSnapshotsPayload<ExtArgs>[]
     taxes: Prisma.$TaxesPayload<ExtArgs>[]
     transfers: Prisma.$TransfersPayload<ExtArgs>[]
+    budgets: Prisma.$BudgetPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1516,6 +1739,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     profilePicUrl: string | null
     type: $Enums.UserType
+    stripeCustomerId: string | null
     createdAt: Date
     updatedAt: Date
     googleId: string | null
@@ -1923,6 +2147,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   analyticsSnapshots<T extends Prisma.User$analyticsSnapshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$analyticsSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnalyticsSnapshotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   taxes<T extends Prisma.User$taxesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$taxesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaxesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transfers<T extends Prisma.User$transfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransfersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  budgets<T extends Prisma.User$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1958,6 +2183,7 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly profilePicUrl: Prisma.FieldRef<"User", 'String'>
   readonly type: Prisma.FieldRef<"User", 'UserType'>
+  readonly stripeCustomerId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly googleId: Prisma.FieldRef<"User", 'String'>
@@ -2517,6 +2743,30 @@ export type User$transfersArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.TransfersScalarFieldEnum | Prisma.TransfersScalarFieldEnum[]
+}
+
+/**
+ * User.budgets
+ */
+export type User$budgetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Budget
+   */
+  select?: Prisma.BudgetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Budget
+   */
+  omit?: Prisma.BudgetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BudgetInclude<ExtArgs> | null
+  where?: Prisma.BudgetWhereInput
+  orderBy?: Prisma.BudgetOrderByWithRelationInput | Prisma.BudgetOrderByWithRelationInput[]
+  cursor?: Prisma.BudgetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BudgetScalarFieldEnum | Prisma.BudgetScalarFieldEnum[]
 }
 
 /**
