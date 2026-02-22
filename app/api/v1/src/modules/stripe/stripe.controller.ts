@@ -9,10 +9,13 @@ import {
   Redirect,
   Req,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { StripeService } from './stripe.service';
 import Stripe from 'stripe';
 import type { Request, Response } from 'express';
+import { AuthGuard } from '../auth/common/guards/jwt-auth.guard';
+import type { AuthenticatedRequest } from '../auth/common/interface/authenticatedRequest';
 @Controller('stripe')
 export class StripeController {
   private stripe: Stripe;
@@ -24,9 +27,13 @@ export class StripeController {
     await this.stripeService.createProduct();
   }
   @Get()
+  @UseGuards(AuthGuard)
   @Redirect()
-  async createCheckoutSession(@Body() lookupKey: any) {
-    const result = await this.stripeService.createCheckoutSession(lookupKey);
+  async createCheckoutSession(@Req() req: AuthenticatedRequest) {
+    const userId = req.user.id;
+    const result = await this.stripeService.createCheckoutSession({
+      userId,
+    });
     return {
       url: result,
     };

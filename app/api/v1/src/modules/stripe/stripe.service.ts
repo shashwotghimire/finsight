@@ -7,6 +7,93 @@ export class StripeService {
   constructor(private readonly prisma: PrismaService) {
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   }
+
+  private async handleSubscriptionCreated(subscription: Stripe.Subscription) {
+    const customerId = subscription.customer as string;
+    const user = await this.prisma.user.findUnique({
+      where: {
+        stripeCustomerId: customerId,
+      },
+    });
+    if (!user) throw new NotFoundException('User not found');
+    await this.prisma.$transaction([
+      this.prisma.subscription.create({
+        data: {
+          userId: user.id,
+          price: subscription.items.data[0].price.unit_amount! / 100,
+          startDate: new Date(subscription.start_date * 1000),
+          status: 'ACTIVE',
+          stripeSubscriptionId: subscription.id,
+          currentPeriodEnd: new Date(
+            subscription.items.data[0].current_period_end * 1000,
+          ),
+        },
+      }),
+      this.prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          type: 'PAID',
+        },
+      }),
+    ]);
+  }
+
+  private async handleSubscriptionUpdated(subscription: Stripe.Subscription) {
+    const customerId = subscription.customer as string;
+    const user = await this.prisma.user.findUnique({
+      where: { stripeCustomerId: customerId },
+    });
+    if (!user) throw new NotFoundException('User not found');
+    const isActive = subscription.status === 'active';
+    await this.prisma.$transaction([
+      this.prisma.subscription.update({
+        where: {
+          stripeSubscriptionId: subscription.id,
+        },
+        data: {
+          status: isActive ? 'ACTIVE' : 'EXPIRED',
+        },
+      }),
+      this.prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          type: isActive ? 'PAID' : 'FREE',
+        },
+      }),
+    ]);
+  }
+
+  private async handleSubscriptionDeleted(subscription: Stripe.Subscription) {
+    const customerId = subscription.customer;
+    const user = await this.prisma.user.findUnique({
+      where: {
+        stripeCustomerId: customerId as string,
+      },
+    });
+    if (!user) throw new NotFoundException('User not found');
+    await this.prisma.$transaction([
+      this.prisma.subscription.update({
+        where: {
+          stripeSubscriptionId: subscription.id,
+        },
+        data: {
+          status: 'EXPIRED',
+        },
+      }),
+      this.prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          type: 'FREE',
+        },
+      }),
+    ]);
+  }
   async createProduct() {
     this.stripe.products
       .create({
@@ -35,13 +122,7 @@ export class StripeService {
           });
       });
   }
-  async createCheckoutSession({
-    lookupKeys,
-    userId,
-  }: {
-    lookupKeys: any;
-    userId: string;
-  }) {
+  async createCheckoutSession({ userId }: { userId: string }) {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userId,
@@ -66,7 +147,6 @@ export class StripeService {
     }
 
     const prices = await this.stripe.prices.list({
-      lookup_keys: lookupKeys,
       expand: ['data.product'],
     });
     const session = await this.stripe.checkout.sessions.create({
@@ -82,6 +162,7 @@ export class StripeService {
       mode: 'subscription',
       success_url: `${process.env.FRONTEND_URL}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
     });
+    console.log(session.url);
     return session.url;
   }
 
@@ -101,6 +182,7 @@ export class StripeService {
     });
     return portalSession.url;
   }
+
   async webhook(rawBody: Buffer, signature: string) {
     const endpointSecret =
       'whsec_34b35c07fe1f1ee2fcfd3ad4f0a09c083fe7e75ad6cdbb43fdaf8746134fa79a';
@@ -117,27 +199,29 @@ export class StripeService {
         subscription = event.data.object;
         status = subscription.status;
         console.log(`Subscription status is ${status}.`);
-        // Then define and call a method to handle the subscription trial ending.
+        // Then define and call a method to handle the subwscription trial ending.
         // handleSubscriptionTrialEnding(subscription);
         break;
       case 'customer.subscription.deleted':
         subscription = event.data.object;
         status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
+        // console.log(`Subscription status is ${status}.`);
+        await this.handleSubscriptionDeleted(subscription);
         // Then define and call a method to handle the subscription deleted.
         // handleSubscriptionDeleted(subscriptionDeleted);
         break;
       case 'customer.subscription.created':
         subscription = event.data.object;
         status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
+        await this.handleSubscriptionCreated(subscription);
+        // console.log(`Subscription status is ${status}.`);
         // Then define and call a method to handle the subscription created.
         // handleSubscriptionCreated(subscription);
         break;
       case 'customer.subscription.updated':
         subscription = event.data.object;
         status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
+        await this.handleSubscriptionUpdated(subscription);
         // Then define and call a method to handle the subscription update.
         // handleSubscriptionUpdated(subscription);
         break;
