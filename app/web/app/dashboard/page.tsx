@@ -9,6 +9,7 @@ import { ChartPieDonutText } from "@/components/dashboard/chart-pie-donut-text";
 import { TransactionsTable } from "@/components/dashboard/table";
 import Logs from "@/components/dashboard/logs";
 import Categories from "@/components/dashboard/categories";
+import Link from "next/link";
 
 const DashboardPage = () => {
   const {
@@ -28,8 +29,7 @@ const DashboardPage = () => {
 
   return (
     //main
-    <div className="bg-gray-50 min-h-screen pb-3">
-      <Navbar />
+    <div className="min-h-screen bg-gray-50 pb-3">
       {/* <div className="bg-white m-4 border border-red-500 shadow-sm rounded-3xl px-6 py-8 min-h-10"> */}
       {/* user
       <div className="bg-white p-2  border-red-500">
@@ -38,7 +38,7 @@ const DashboardPage = () => {
         </h3>
       </div> */}
       {/* card stats */}
-      <div className="bg-white p-2 py-6 ml-4 mr-4 grid grid-cols-1 lg:grid-cols-4 gap-4 mx-auto mt-8 max-w-8xl shadow-sm rounded-2xl">
+      <div className="max-w-8xl mx-auto mt-8 mr-4 ml-4 grid grid-cols-1 gap-4 rounded-2xl bg-white p-2 py-6 shadow-sm lg:grid-cols-4">
         <StatsCard
           title="Total Accounts"
           value={
@@ -68,16 +68,16 @@ const DashboardPage = () => {
           }
         />
       </div>
-      <div className="bg-white px-2 py-3 ml-4 mr-4 grid grid-cols-1 md:grid-cols-2 mt-3 rounded-2xl border-red-700 max-w-8xl gap-5 mx-auto">
-        <div className=" border rounded-2xl border-neutral-50 shadow-sm max-w-4xl ">
+      <div className="max-w-8xl mx-auto mt-3 mr-4 ml-4 grid grid-cols-1 gap-5 rounded-2xl border-red-700 bg-white px-2 py-3 md:grid-cols-2">
+        <div className="max-w-4xl rounded-2xl border border-neutral-50 shadow-sm">
           <TransactionsTable />
         </div>
         <div>
           <ChartPieDonutText />
         </div>
       </div>
-      <div className="px-2 py-2 bg-white ml-4 mr-4 max-w-8xl shadow-sm border-neutral-50 rounded-2xl mx-auto mt-3 grid md:grid-cols-2 gap-3">
-        <div className="border border-neutral-100 shadow-sm rounded-2xl">
+      <div className="max-w-8xl mx-auto mt-3 mr-4 ml-4 grid gap-3 rounded-2xl border-neutral-50 bg-white px-2 py-2 shadow-sm md:grid-cols-2">
+        <div className="rounded-2xl border border-neutral-100 shadow-sm">
           <ChartBarDemoTooltip />
         </div>
         <div className="grid grid-cols-1 gap-3">

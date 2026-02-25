@@ -1,10 +1,12 @@
+"use client";
 import { useState } from "react";
 import TabButton from "./navbar-button";
 import { useMe } from "@/services/api/auth/auth.api";
 import { LogoButton, PhotoButton } from "./photo-button";
+import { usePathname } from "next/navigation";
 const Navbar = () => {
   const { data } = useMe();
-  const [activeTab, setActiveTab] = useState("");
+  const pathname = usePathname();
   return (
     // main
     <div className="m-1 rounded-b-xxl bg-white flex flex-col shadow-sm ">
@@ -36,28 +38,28 @@ const Navbar = () => {
       <div className="p-1.5 mt-1 flex start-0.5 gap-4 border-neutral-600">
         <TabButton
           label="Home"
-          active={activeTab === "Home"}
-          onClick={() => setActiveTab("Home")}
+          active={pathname === "/dashboard"}
+          href="/dashboard"
         />
         <TabButton
           label="Accounts"
-          active={activeTab === "Accounts"}
-          onClick={() => setActiveTab("Accounts")}
+          active={pathname === "/dashboard/accounts"}
+          href="/dashboard/accounts"
         />
         <TabButton
           label="Transactions"
-          active={activeTab === "Transactions"}
-          onClick={() => setActiveTab("Transactions")}
+          active={pathname === "/dashboard/transactions"}
+          href="/dashboard/transactions"
         />
         <TabButton
           label="Analytics"
-          active={activeTab === "Analytics"}
-          onClick={() => setActiveTab("Analytics")}
+          active={pathname === "/dashboard/analytics"}
+          href="/dashboard/analytics"
         />
         <TabButton
           label="Taxes"
-          active={activeTab === "Taxes"}
-          onClick={() => setActiveTab("Taxes")}
+          active={pathname === "/dashboard/taxes"}
+          href="/dashboard/taxes"
         />
       </div>
     </div>
