@@ -2,17 +2,44 @@
 import AccountsCard from "@/components/accounts-page/accounts-card";
 import CreateAccountModal from "@/components/accounts-page/create-account-modal";
 import { StatsCard } from "@/components/dashboard/statsCard";
+import {
+  useAccounts,
+  useCreateAccount,
+} from "@/services/api/accounts/accounts.api";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 const Accounts = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [balance, setBalance] = useState("");
+  const [currency, setCurrency] = useState<"NPR" | "USD">("NPR");
   const [accountType, setAccountType] = useState("");
+  const [err, setErr] = useState();
+  const queryClient = useQueryClient();
+  const {
+    data: userAccountData,
+    isLoading: accountIsLoading,
+    isError: accountIsError,
+    error: accountError,
+  } = useAccounts();
+  const { mutate, isPending, isError, error } = useCreateAccount();
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-  const handleCreate = () => {
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
     setIsOpen(!isOpen);
+    mutate(
+      { name, balance, currency, type: accountType },
+      {
+        onSuccess() {
+          queryClient.invalidateQueries({ queryKey: ["accounts"] });
+        },
+        onError(err: any) {
+          setErr(err);
+        },
+      },
+    );
   };
   return (
     <div className="p-4">
@@ -38,48 +65,57 @@ const Accounts = () => {
           <CreateAccountModal isOpen onClose={handleClick}>
             <div className="mt-20 flex max-h-[390px] w-md flex-col justify-center gap-4 rounded-2xl border border-neutral-100 bg-neutral-100 p-4">
               <h1>Add an account</h1>
-              <div className="mt-5 flex flex-col gap-5">
-                <input
-                  className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
-                  type="text"
-                  placeholder="Enter account name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                  type="text"
-                  className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
-                  value={balance}
-                  placeholder="Enter account balance"
-                  onChange={(e) => setBalance(e.target.value)}
-                />
-                <select className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400">
-                  <option>Currency</option>
-                  <option>NPR</option>
-                  <option>USD</option>
-                </select>
-                <input
-                  type="text"
-                  className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
-                  placeholder="Enter account type"
-                  value={accountType}
-                  onChange={(e) => setAccountType(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-row-reverse gap-5 p-2">
-                <button
-                  onClick={handleClick}
-                  className="w-[100px] rounded-lg border-none bg-red-800 p-1.5 text-white shadow-sm transition hover:cursor-pointer hover:bg-red-900"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleCreate}
-                  className="w-[100px] rounded-lg border-none bg-orange-950 p-1.5 text-white shadow-sm transition hover:cursor-pointer hover:bg-orange-900"
-                >
-                  Create
-                </button>
-              </div>
+              <form onSubmit={handleCreate}>
+                <div className="mt-5 flex flex-col gap-5">
+                  <input
+                    className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
+                    type="text"
+                    placeholder="Enter account name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
+                    value={balance}
+                    placeholder="Enter account balance"
+                    onChange={(e) => setBalance(e.target.value)}
+                  />
+                  <select
+                    value={currency}
+                    onChange={(e) =>
+                      setCurrency(e.target.value as "NPR" | "USD")
+                    }
+                    className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
+                  >
+                    <option value="">Currency</option>
+                    <option value="NPR">NPR</option>
+                    <option value="USD">USD</option>
+                  </select>
+                  <input
+                    type="text"
+                    className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
+                    placeholder="Enter account type"
+                    value={accountType}
+                    onChange={(e) => setAccountType(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-row-reverse gap-5 p-2">
+                  <button
+                    onClick={handleClick}
+                    type="button"
+                    className="w-[100px] rounded-lg border-none bg-red-800 p-1.5 text-white shadow-sm transition hover:cursor-pointer hover:bg-red-900"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-[100px] rounded-lg border-none bg-orange-950 p-1.5 text-white shadow-sm transition hover:cursor-pointer hover:bg-orange-900"
+                  >
+                    Create
+                  </button>
+                </div>
+              </form>
             </div>
           </CreateAccountModal>
           <button onClick={handleClick}>Close</button>
@@ -97,16 +133,11 @@ const Accounts = () => {
         />
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 rounded-lg border border-neutral-100 bg-white p-4">
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
-        <AccountsCard />
+        {userAccountData?.data.accounts.map((account) => (
+          <div key={account.id}>
+            <StatsCard title={account.name} value={account.balance} />
+          </div>
+        ))}
       </div>
     </div>
   );
