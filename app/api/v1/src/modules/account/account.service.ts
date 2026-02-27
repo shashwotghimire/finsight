@@ -53,9 +53,14 @@ export class AccountService {
       take: limit,
       skip: offset,
     });
+    const total = await this.prisma.accounts.count({ where: whereClause });
     return {
       success: true,
       message: "User's accounts fetched successfully",
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      total,
       data: {
         accounts,
       },
