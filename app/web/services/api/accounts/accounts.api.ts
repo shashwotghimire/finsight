@@ -1,5 +1,5 @@
 import axiosInstance from "@/services/axios/axios";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 
 export interface UserAccounts {
   id: string;
@@ -13,6 +13,10 @@ export interface UserAccounts {
 }
 
 export interface AccountResponse {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
   data: {
     accounts: UserAccounts[];
   };
@@ -25,13 +29,16 @@ interface CreateAccountRequest {
   type: string;
 }
 
-export const useAccounts = () => {
+export const useAccounts = (page: number, limit: number = 10) => {
   return useQuery<AccountResponse>({
-    queryKey: ["accounts"],
+    queryKey: ["accounts", page],
     queryFn: async () => {
-      const res = await axiosInstance.get("/account");
+      const res = await axiosInstance.get(
+        `/account?page=${page}&limit=${limit}`,
+      );
       return res.data;
     },
+    placeholderData: keepPreviousData,
   });
 };
 

@@ -52,6 +52,7 @@ export class AccountService {
       where: whereClause,
       take: limit,
       skip: offset,
+      orderBy: { createdAt: 'desc' },
     });
     const total = await this.prisma.accounts.count({ where: whereClause });
     return {

@@ -1,6 +1,7 @@
 "use client";
 import AccountsCard from "@/components/accounts-page/accounts-card";
 import CreateAccountModal from "@/components/accounts-page/create-account-modal";
+import PaginationButton from "@/components/accounts-page/pagination-button";
 import { StatsCard } from "@/components/dashboard/statsCard";
 import {
   useAccounts,
@@ -9,6 +10,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 const Accounts = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [balance, setBalance] = useState("");
@@ -21,7 +23,8 @@ const Accounts = () => {
     isLoading: accountIsLoading,
     isError: accountIsError,
     error: accountError,
-  } = useAccounts();
+    isPlaceholderData: accountIsPlaceholderData,
+  } = useAccounts(currentPage, 10);
   const { mutate, isPending, isError, error } = useCreateAccount();
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -40,6 +43,16 @@ const Accounts = () => {
         },
       },
     );
+  };
+  const handleNext = () => {
+    if (userAccountData && currentPage < userAccountData.totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
   return (
     <div className="p-4">
@@ -121,7 +134,7 @@ const Accounts = () => {
           <button onClick={handleClick}>Close</button>
         </div>
       )}
-      <div className="mx-auto mt-6 grid max-w-7xl gap-4 rounded-2xl border border-red-500 bg-white p-4 shadow-sm sm:grid-cols-1 md:grid-cols-3">
+      <div className="mx-auto mt-6 grid max-w-7xl gap-4 rounded-2xl border border-neutral-100 bg-white p-4 shadow-sm sm:grid-cols-1 md:grid-cols-3">
         <StatsCard title="Total Accounts" value={100} />
         <StatsCard title="Total Balance" value={100} />
         <StatsCard title="Highest Balance" value={100} />
@@ -138,6 +151,19 @@ const Accounts = () => {
             <StatsCard title={account.name} value={account.balance} />
           </div>
         ))}
+        {/* [pagination] */}
+      </div>
+      <div className="mx-auto mt-5 flex max-w-7xl justify-between">
+        <PaginationButton
+          disabled={currentPage === 1}
+          onClick={handlePrevious}
+          pageNumber="Previous"
+        />
+        <PaginationButton
+          disabled={currentPage === userAccountData?.totalPages}
+          onClick={handleNext}
+          pageNumber="Next"
+        />
       </div>
     </div>
   );
