@@ -26,7 +26,7 @@ const Accounts = () => {
     isError: accountIsError,
     error: accountError,
     isPlaceholderData: accountIsPlaceholderData,
-  } = useAccounts(currentPage, 5, debouncedSearch);
+  } = useAccounts(currentPage, 8, debouncedSearch);
   const { mutate, isPending, isError, error } = useCreateAccount();
   const handleClick = () => {
     setIsOpen(!isOpen);
