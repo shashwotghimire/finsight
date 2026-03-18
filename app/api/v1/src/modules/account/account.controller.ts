@@ -34,14 +34,14 @@ export class AccountController {
     @Req() req: AuthenticatedRequest,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
-    @Query('query') query?: string,
+    @Query('search') search?: string,
     @Query('type') type?: 'JOINT' | 'PERSONAL' | 'SAVING',
   ) {
     return await this.accountService.getAllAccounts({
       userId: req.user.id,
       page: page ? parseInt(page) : undefined,
       limit: limit ? parseInt(limit) : undefined,
-      query,
+      search,
       type,
     });
   }
