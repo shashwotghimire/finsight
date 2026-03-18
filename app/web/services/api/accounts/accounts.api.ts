@@ -29,13 +29,21 @@ interface CreateAccountRequest {
   type: string;
 }
 
-export const useAccounts = (page: number, limit: number = 10) => {
+export const useAccounts = (
+  page: number,
+  limit: number = 10,
+  search: string,
+) => {
   return useQuery<AccountResponse>({
-    queryKey: ["accounts", page],
+    queryKey: ["accounts", { page, search }],
     queryFn: async () => {
-      const res = await axiosInstance.get(
-        `/account?page=${page}&limit=${limit}`,
-      );
+      const res = await axiosInstance.get(`/account`, {
+        params: {
+          page,
+          limit,
+          search,
+        },
+      });
       return res.data;
     },
     placeholderData: keepPreviousData,

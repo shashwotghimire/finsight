@@ -29,21 +29,21 @@ export class AccountService {
     userId,
     page = 1,
     limit = 10,
-    query = '',
+    search = '',
     type,
   }: {
     userId: string;
     page?: number;
     limit?: number;
-    query?: string;
+    search?: string;
     type?: 'PERSONAL' | 'JOINT' | 'SAVING';
   }) {
     const offset = (page - 1) * limit;
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new NotFoundException('User not found');
     const whereClause: any = { userId };
-    if (query) {
-      whereClause.name = { contains: query, mode: 'insensitive' };
+    if (search) {
+      whereClause.name = { contains: search, mode: 'insensitive' };
     }
     if (type) {
       whereClause.type = type;

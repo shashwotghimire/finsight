@@ -8,7 +8,7 @@ import {
   useCreateAccount,
 } from "@/services/api/accounts/accounts.api";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Accounts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +17,8 @@ const Accounts = () => {
   const [currency, setCurrency] = useState<"NPR" | "USD">("NPR");
   const [accountType, setAccountType] = useState("");
   const [err, setErr] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
   const queryClient = useQueryClient();
   const {
     data: userAccountData,
@@ -24,7 +26,7 @@ const Accounts = () => {
     isError: accountIsError,
     error: accountError,
     isPlaceholderData: accountIsPlaceholderData,
-  } = useAccounts(currentPage, 10);
+  } = useAccounts(currentPage, 5, debouncedSearch);
   const { mutate, isPending, isError, error } = useCreateAccount();
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -54,6 +56,13 @@ const Accounts = () => {
       setCurrentPage((prev) => prev - 1);
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   return (
     <div className="p-4">
       <div className="mx-auto flex max-w-6xl justify-between border border-neutral-100">
@@ -72,7 +81,7 @@ const Accounts = () => {
           </button>
         </div>
       </div>
-      {/* modal */}
+
       {isOpen && (
         <div>
           <CreateAccountModal isOpen onClose={handleClick}>
@@ -143,6 +152,8 @@ const Accounts = () => {
         <input
           placeholder="Search your acount"
           className="w-full rounded-2xl p-4 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 rounded-lg border border-neutral-100 bg-white p-4">
@@ -151,7 +162,6 @@ const Accounts = () => {
             <StatsCard title={account.name} value={account.balance} />
           </div>
         ))}
-        {/* [pagination] */}
       </div>
       <div className="mx-auto mt-5 flex max-w-7xl justify-between">
         <PaginationButton
