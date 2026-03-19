@@ -8,6 +8,7 @@ import {
   useCreateAccount,
 } from "@/services/api/accounts/accounts.api";
 import { useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 const Accounts = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -158,9 +159,11 @@ const Accounts = () => {
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 rounded-lg border border-neutral-100 bg-white p-4">
         {userAccountData?.data.accounts.map((account) => (
-          <div key={account.id}>
-            <StatsCard title={account.name} value={account.balance} />
-          </div>
+          <Link key={account.id} href={`accounts/${account.id}`}>
+            <div key={account.id}>
+              <StatsCard title={account.name} value={account.balance} />
+            </div>
+          </Link>
         ))}
       </div>
       <div className="mx-auto mt-5 flex max-w-7xl justify-between">

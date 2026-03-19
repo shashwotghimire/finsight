@@ -22,6 +22,26 @@ export interface AccountResponse {
   };
 }
 
+export interface AccountByIdResponse {
+  account: {
+    id: string;
+    user: {
+      id: string;
+      name: string;
+      profilePicUrl: string;
+      type: string;
+    };
+    name: string;
+    type: string;
+    currency: string;
+    balance: string;
+    createdAt: string;
+    updatedAt: string;
+    transactions: [];
+    outgoingTransfers: [];
+    incomingTransfers: [];
+  };
+}
 interface CreateAccountRequest {
   name: string;
   balance: string;
@@ -54,6 +74,16 @@ export const useCreateAccount = () => {
   return useMutation<UserAccounts, unknown, CreateAccountRequest>({
     mutationFn: async (data: CreateAccountRequest) => {
       const res = await axiosInstance.post("/account", data);
+      return res.data;
+    },
+  });
+};
+
+export const useAccountById = (accountId: string) => {
+  return useQuery<AccountByIdResponse>({
+    queryKey: [],
+    queryFn: async () => {
+      const res = (await axiosInstance.get(`/account/${accountId}`)).data;
       return res.data;
     },
   });
