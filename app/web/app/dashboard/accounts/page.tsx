@@ -16,7 +16,9 @@ const Accounts = () => {
   const [name, setName] = useState("");
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState<"NPR" | "USD">("NPR");
-  const [accountType, setAccountType] = useState("");
+  const [accountType, setAccountType] = useState<
+    "JOINT" | "PERSONAL" | "SAVING" | ""
+  >("PERSONAL");
   const [err, setErr] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
@@ -115,13 +117,20 @@ const Accounts = () => {
                     <option value="NPR">NPR</option>
                     <option value="USD">USD</option>
                   </select>
-                  <input
-                    type="text"
-                    className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
-                    placeholder="Enter account type"
+                  <select
                     value={accountType}
-                    onChange={(e) => setAccountType(e.target.value)}
-                  />
+                    onChange={(e) =>
+                      setAccountType(
+                        e.target.value as "JOINT" | "PERSONAL" | "SAVING",
+                      )
+                    }
+                    className="rounded-sm p-2 shadow-sm hover:rounded-2xl hover:bg-neutral-100 hover:transition focus:rounded-2xl focus:outline focus:outline-neutral-400"
+                  >
+                    <option value="">Account type</option>
+                    <option value="JOINT">Joint</option>
+                    <option value="PERSONAL">Personal</option>
+                    <option value="SAVING">Savings</option>
+                  </select>
                 </div>
                 <div className="flex flex-row-reverse gap-5 p-2">
                   <button

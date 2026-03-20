@@ -1,5 +1,11 @@
 import axiosInstance from "@/services/axios/axios";
-import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export interface UserAccounts {
   id: string;
@@ -48,7 +54,18 @@ interface CreateAccountRequest {
   currency: "USD" | "NPR";
   type: string;
 }
+interface EditAccountRequest {
+  name?: string;
+  balance?: string;
+  currency?: "USD" | "NPR";
+  type?: string;
+}
 
+interface EditAccountResponse {
+  data: {
+    account: UserAccounts;
+  };
+}
 export const useAccounts = (
   page: number,
   limit: number = 10,
@@ -79,9 +96,32 @@ export const useCreateAccount = () => {
   });
 };
 
+export const useEditAccount = (accountId: string) => {
+  return useMutation<EditAccountResponse, unknown, EditAccountRequest>({
+    mutationFn: async (data) => {
+      const res = (await axiosInstance.patch(`/account/${accountId}`, data))
+        .data;
+      return res.data;
+    },
+  });
+};
+
+export const useDeleteAccount = (accountId: string) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      (await axiosInstance.delete(`/account/${accountId}`)).data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      router.push("/dashboard/accounts");
+    },
+  });
+};
 export const useAccountById = (accountId: string) => {
   return useQuery<AccountByIdResponse>({
-    queryKey: [],
+    queryKey: ["AccountById", accountId],
     queryFn: async () => {
       const res = (await axiosInstance.get(`/account/${accountId}`)).data;
       return res.data;

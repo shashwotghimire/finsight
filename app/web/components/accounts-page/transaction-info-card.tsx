@@ -41,9 +41,9 @@ const TransactionInfoCard = ({
         : IncomingTransfers - OutgoingTransfers;
 
   return (
-    <div className="h-[150px] max-w-[200px] rounded-xl p-4 shadow-sm">
+    <div className="min-h-[150px] w-full rounded-xl p-4 shadow-sm">
       <span className={`flex items-center gap-2 ${config.color}`}>
-        <Icon />
+        <Icon className="h-5 w-5" />
         {config.label}
       </span>
 
