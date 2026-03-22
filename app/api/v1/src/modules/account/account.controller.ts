@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -19,6 +20,8 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 @UseGuards(AuthGuard)
 @Controller('account')
 export class AccountController {
+  private readonly logger = new Logger(AccountController.name);
+
   constructor(private readonly accountService: AccountService) {}
 
   @Post()
@@ -26,6 +29,7 @@ export class AccountController {
     @Body() dto: CreateAccountDto,
     @Req() req: AuthenticatedRequest,
   ) {
+    this.logger.log(`POST /account - userId: ${req.user.id}`);
     return await this.accountService.addAccount(dto, req.user.id);
   }
 
@@ -37,6 +41,9 @@ export class AccountController {
     @Query('search') search?: string,
     @Query('type') type?: 'JOINT' | 'PERSONAL' | 'SAVING',
   ) {
+    this.logger.log(
+      `GET /account - userId: ${req.user.id}, page: ${page}, limit: ${limit}, search: ${search}, type: ${type}`,
+    );
     return await this.accountService.getAllAccounts({
       userId: req.user.id,
       page: page ? parseInt(page) : undefined,
@@ -51,6 +58,7 @@ export class AccountController {
     @Param('accountId') accountId: string,
     @Req() req: AuthenticatedRequest,
   ) {
+    this.logger.log(`GET /account/${accountId} - userId: ${req.user.id}`);
     return await this.accountService.getAccountById(accountId, req.user.id);
   }
 
@@ -58,15 +66,22 @@ export class AccountController {
   async updateAccount(
     @Param('accountId') accountId: string,
     @Body() dto: UpdateAccountDto,
+    @Req() req: AuthenticatedRequest,
   ) {
+    this.logger.log(`PATCH /account/${accountId} - userId: ${req.user.id}`);
     return await this.accountService.updateAccount({
       accountId,
+      userId: req.user.id,
       dto,
     });
   }
 
   @Delete(':accountId')
-  async deleteAccount(@Param('accountId') accountId: string) {
-    return await this.accountService.deleteAccount(accountId);
+  async deleteAccount(
+    @Param('accountId') accountId: string,
+    @Req() req: AuthenticatedRequest,
+  ) {
+    this.logger.log(`DELETE /account/${accountId} - userId: ${req.user.id}`);
+    return await this.accountService.deleteAccount(accountId, req.user.id);
   }
 }

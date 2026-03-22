@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AccountType, Currency } from 'src/generated/prisma/enums';
@@ -6,9 +6,12 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Injectable()
 export class AccountService {
+  private readonly logger = new Logger(AccountService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async addAccount(dto: CreateAccountDto, userId: string) {
+    this.logger.log(`Creating account for userId: ${userId}`);
     const account = await this.prisma.accounts.create({
       data: {
         name: dto.name,
@@ -38,10 +41,15 @@ export class AccountService {
     search?: string;
     type?: 'PERSONAL' | 'JOINT' | 'SAVING';
   }) {
+    this.logger.log(`Fetching all accounts for userId: ${userId}`);
     const offset = (page - 1) * limit;
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new NotFoundException('User not found');
-    const whereClause: any = { userId };
+    const whereClause: {
+      userId: string;
+      name?: { contains: string; mode: 'insensitive' };
+      type?: AccountType;
+    } = { userId };
     if (search) {
       whereClause.name = { contains: search, mode: 'insensitive' };
     }
@@ -69,10 +77,9 @@ export class AccountService {
   }
 
   async getAccountById(accountId: string, userId: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) throw new NotFoundException('User not found');
-    const account = await this.prisma.accounts.findUnique({
-      where: { id: accountId },
+    this.logger.log(`Fetching account ${accountId} for userId: ${userId}`);
+    const account = await this.prisma.accounts.findFirst({
+      where: { id: accountId, userId },
       select: {
         id: true,
         user: {
@@ -94,6 +101,8 @@ export class AccountService {
         incomingTransfers: true,
       },
     });
+    if (!account) throw new NotFoundException('Account not found');
+
     return {
       success: true,
       message: 'Fetched account successfully',
@@ -105,13 +114,16 @@ export class AccountService {
 
   async updateAccount({
     accountId,
+    userId,
     dto,
   }: {
     accountId: string;
+    userId: string;
     dto: UpdateAccountDto;
   }) {
-    const account = await this.prisma.accounts.findUnique({
-      where: { id: accountId },
+    this.logger.log(`Updating account ${accountId}`);
+    const account = await this.prisma.accounts.findFirst({
+      where: { id: accountId, userId },
     });
     if (!account) throw new NotFoundException('Account not found');
     const updatedAccount = await this.prisma.accounts.update({
@@ -133,9 +145,10 @@ export class AccountService {
     };
   }
 
-  async deleteAccount(accountId: string) {
-    const account = await this.prisma.accounts.findUnique({
-      where: { id: accountId },
+  async deleteAccount(accountId: string, userId: string) {
+    this.logger.log(`Deleting account ${accountId}`);
+    const account = await this.prisma.accounts.findFirst({
+      where: { id: accountId, userId },
     });
     if (!account) throw new NotFoundException('Account not found');
     await this.prisma.accounts.delete({ where: { id: accountId } });
