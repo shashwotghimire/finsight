@@ -1,5 +1,4 @@
 "use client";
-import AccountsCard from "@/components/accounts-page/accounts-card";
 import CreateAccountModal from "@/components/accounts-page/create-account-modal";
 import PaginationButton from "@/components/accounts-page/pagination-button";
 import { StatsCard } from "@/components/dashboard/statsCard";
