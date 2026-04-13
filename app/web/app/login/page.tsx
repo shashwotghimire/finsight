@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import type { LoginResponse } from "@/services/api/auth/auth.api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { PublicRoute } from "@/components/routes/public-route";
 
 const LoginPage = () => {
@@ -43,9 +44,17 @@ const LoginPage = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8 space-y-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-              Fin<span className="text-blue-600">Sight</span>
-            </h1>
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <Image
+                src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/money/dollar-minimalistic-7sr3wyd3gc9je4re2y9b8l.png/dollar-minimalistic-zumyt8yqlccd6959i5l29.png?_a=DATAiZAAZAA0"
+                alt="Finsights logo"
+                width={48}
+                height={48}
+              />
+              <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+                Finsights
+              </h1>
+            </div>
             <p className="mt-2 text-sm text-gray-500">
               Sign in to your account
             </p>
