@@ -4,27 +4,33 @@ import Link from "next/link";
 const featureCards = [
   {
     title: "Mood-Based Budget AI",
-    description: "Auto-adjusts your monthly budget depending on whether your playlist is lo-fi, metal, or jazz.",
+    description:
+      "Auto-adjusts your monthly budget depending on whether your playlist is lo-fi, metal, or jazz.",
   },
   {
     title: "Quantum Receipt Scanner",
-    description: "Reads receipts before you even upload them (sometimes even before you buy anything).",
+    description:
+      "Reads receipts before you even upload them (sometimes even before you buy anything).",
   },
   {
     title: "Retro Mercury Mode",
-    description: "Switches your dashboard to a cosmic finance timeline optimized for dramatic decision-making.",
+    description:
+      "Switches your dashboard to a cosmic finance timeline optimized for dramatic decision-making.",
   },
   {
     title: "Cashflow Weather Radar",
-    description: "Predicts financial storms with colorful clouds and suspiciously accurate vibes.",
+    description:
+      "Predicts financial storms with colorful clouds and suspiciously accurate vibes.",
   },
   {
     title: "Emoji Tax Assistant",
-    description: "Translates complex tax categories into emojis so your reports feel emotionally supportive.",
+    description:
+      "Translates complex tax categories into emojis so your reports feel emotionally supportive.",
   },
   {
     title: "Teleport Savings Vault",
-    description: "Moves spare change to a vault in another dimension where impulse purchases can’t find it.",
+    description:
+      "Moves spare change to a vault in another dimension where impulse purchases can’t find it.",
   },
 ];
 
@@ -63,17 +69,29 @@ export default function Home() {
             >
               Get Started
             </Link>
-            <Link
-              href="/dashboard"
+            <a
+              href="#demo"
               className="inline-flex h-11 items-center justify-center rounded-full border border-white/30 px-6 text-sm font-semibold transition hover:bg-white/10"
             >
               Watch Demo
-            </Link>
+            </a>
+          </div>
+        </section>
+
+        <section
+          id="demo"
+          className="rounded-3xl border border-cyan-200/25 bg-cyan-500/10 p-6 md:p-8"
+        >
+          <div className="space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight">Demo Preview</h2>
+            <div className="h-48 rounded-2xl border border-white/20 bg-slate-950/70" />
           </div>
         </section>
 
         <section className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Ready to do xyz</h2>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+            Ready to do xyz
+          </h2>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               href="/register"
@@ -91,7 +109,9 @@ export default function Home() {
         </section>
 
         <section className="space-y-4">
-          <h3 className="text-2xl font-semibold tracking-tight">Features You Definitely Didn’t Ask For</h3>
+          <h3 className="text-2xl font-semibold tracking-tight">
+            Features You Definitely Didn’t Ask For
+          </h3>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {featureCards.map((card) => (
               <article
