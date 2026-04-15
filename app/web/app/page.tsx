@@ -63,12 +63,12 @@ export default function Home() {
             >
               Get Started
             </Link>
-            <button
-              type="button"
+            <Link
+              href="/dashboard"
               className="inline-flex h-11 items-center justify-center rounded-full border border-white/30 px-6 text-sm font-semibold transition hover:bg-white/10"
             >
               Watch Demo
-            </button>
+            </Link>
           </div>
         </section>
 
