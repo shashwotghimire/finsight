@@ -63,12 +63,12 @@ export default function Home() {
             >
               Get Started
             </Link>
-            <a
-              href="#"
+            <button
+              type="button"
               className="inline-flex h-11 items-center justify-center rounded-full border border-white/30 px-6 text-sm font-semibold transition hover:bg-white/10"
             >
               Watch Demo
-            </a>
+            </button>
           </div>
         </section>
 
